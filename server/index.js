@@ -73,6 +73,16 @@ app.delete('/delete/:id', (req,res) => {
     })
 })
 
+app.get('/getUID',(req,res) =>{
+    db.query("SELECT UID FROM register ORDER BY ID DESC LIMIT 1", (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+});
+
 app.listen('3001',() =>{
     console.log('Server is running on port 3001')
 });

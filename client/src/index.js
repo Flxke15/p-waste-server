@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import Login from "./Pages/login";
 import AddUser from "./Pages/AddUser";
+import UserList from "./component/UserList";
 
 const router = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
     {
         path : "/addUser",
         element : <AddUser/>,
+    },
+    {
+        path : "/userList",
+        element : <UserList/>,
     },
 ]);
 
