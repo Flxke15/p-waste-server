@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../component/navbar";
 import Footer from "../component/footer";
 import axios from "axios";
-import {useState} from "react";
+import {useState,useEffect} from "react";
 import Swal from "sweetalert2";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import UserList from "../component/UserList";
@@ -10,7 +10,7 @@ import ".//pages.css"
 
 function MainAdmin(){
     const navigate = useNavigate();
-
+    const [name,setName] = useState('');
     const [show,toggleShow] = useState(true)
 
     const [userList,setUserList] = useState([]);
@@ -20,10 +20,20 @@ function MainAdmin(){
         })
     }
 
+    // useEffect(()=>{
+    //     axios.get('http://localhost:3001').then(res => {
+    //         if(res.data.valid){
+    //             setName(res.data.username);
+    //         }else {
+    //             navigate('/');
+    //         }
+    //     }).catch(err => console.log(err))},[])
+
 
     return(
         <div className="App container">
             <Navbar/>
+            <h1>Hello ! : {name}</h1>
             <h1>This is Main Admin Page. <a className='btn btn-secondary' href='/Login' role='button' style={{marginRight: 2 + 'em'}}>Go to Login</a></h1>
 
             <div className='row'>

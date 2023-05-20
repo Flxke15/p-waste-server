@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import Navbar from "../component/navbar";
 import Footer from "../component/footer";
 import axios from "axios";
@@ -47,23 +47,40 @@ function AddUser(){
         navigate('/mainAdmin');
     }
 
-    const getUID = (event) => {
-        event.preventDefault();
-        axios.get("http://localhost:3001/getUID").then((response) => {
+    // useEffect(()=>{
+    //     axios.get("http://localhost:3001/getUID").then((response) => {
+    //         setGetUID(response.data);
+    //     })
+    //
+    // },[])
+
+    useEffect(()=>{
+        getuid.map((val,key)=>{
+            setUID(val.UID)
+        })
+
+    },[getuid])
+
+    const getUID = async(event) => {
+        event.preventDefault(false);
+
+        await axios.get("http://localhost:3001/getUID").then((response) => {
             setGetUID(response.data);
         })
         Swal.fire({
             title : "Generate Success !",
-            text :"UID : " +getuid.map((val,key) =>{return(val.UID)}),
-            confirmButtonText: 'Copy',
-            }).then((result) => {
-                if(result.isConfirmed){
-                    navigator.clipboard.writeText(getuid.map((val,key) =>{return(val.UID)}))
-                    Swal.fire({
-                        title : 'Copied !'
-                    })
-                }
+            // text :"UID : " + uid,
+            // confirmButtonText: 'Copy',
+            // }).then((result) => {
+            //     if(result.isConfirmed){
+            //         navigator.clipboard.writeText(getuid.map((val,key) =>{return(val.UID)}))
+            //         Swal.fire({
+            //             title : 'Copied !'
+            //         })
+            //     }
         })
+
+        console.log(getuid)
     }
 
 
@@ -105,9 +122,11 @@ function AddUser(){
                                 type='text'
                                 className='form-control'
                                 placeholder='Enter UID...'
+                                value={uid}
                                 onChange={(event) => {
                                     setUID(event.target.value)
                                 }}
+                                disabled
                             />
                         </div>
                     </div>
