@@ -84,6 +84,26 @@ app.get('/showUser',(req,res) =>{
     });
 });
 
+app.get('/showPoint',(req,res) =>{
+    db.query("SELECT * FROM scanpoint", (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+});
+
+app.get('/showHistory',(req,res) =>{
+    db.query("SELECT * FROM history ORDER BY No DESC", (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+});
+
 app.post('/adduser', (req,res) => {
     const surname = req.body.surname;
     const lastname = req.body.lastname;

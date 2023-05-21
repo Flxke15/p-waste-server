@@ -15,6 +15,7 @@ import {
 import Login from "./Pages/login";
 import AddUser from "./Pages/AddUser";
 import UserList from "./component/UserList";
+import Footer from "./component/footer";
 
 const router = createBrowserRouter([
     {

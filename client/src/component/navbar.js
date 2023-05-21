@@ -4,10 +4,9 @@ import axios from "axios";
 function Navbar(){
 
     return(
-        <div className='navbar'>
-            <hr/>
-            <h1>Employee Information ระบบการจัดการขยะ</h1>
-            <hr/>
+        <div style={{marginTop:"25px",textAlign:"center"}}>
+            <h1>Employee Information </h1>
+            <h3>ระบบการจัดการขยะ</h3>
         </div>
     )
 }

@@ -53,7 +53,7 @@ function Login() {
     return (
         <div className="App container">
             <Navbar/>
-            <div className='information'>
+            <div className='information' style={{marginTop:"20vh"}}>
                 <form action=''>
                     <div className='mb-3'>
                         <label htmlFor='name' className='form-label'>User :</label>
@@ -77,7 +77,7 @@ function Login() {
                             }}
                         />
                     </div>
-                    <div className='login-btn'>
+                    <div className='login-btn' style={{display:"flex",justifyContent:"flex-end"}}>
                         <a className='btn btn-secondary' href='/mainUser' role='button' style={{marginRight: 2 + 'em'}}>Login with Guest</a>
                         <a className='btn btn-success' role='button' onClick={login}>Login</a>
                         <h1>{loginStatus}</h1>

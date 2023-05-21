@@ -8,6 +8,8 @@ import {Routes, Route, useNavigate} from 'react-router-dom';
 import UserList from "../component/UserList";
 import ".//pages.css"
 import Cookies from 'universal-cookie';
+import Point from "../component/Point";
+import History from "../component/History";
 
 function MainAdmin(){
     const navigate = useNavigate();
@@ -39,8 +41,9 @@ function MainAdmin(){
             </div>
 
             <div className='row'>
-                <div className='col border'>
+                <div className='col border' >
                     <h1>History</h1>
+                    <History/>
                 </div>
                 <div className='col border'>
                     <h1>เวลาการทำงาน</h1>
@@ -49,6 +52,7 @@ function MainAdmin(){
             <div className='row'>
                 <div className='col border'>
                     <h1>Point</h1>
+                    <Point/>
                 </div>
                 <div className='col border'>
                     <h1>User</h1>
