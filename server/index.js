@@ -3,36 +3,52 @@ const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
 const e = require("express");
+
 const session = require("express-session");
-const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+
+const Cookies = require("universal-cookie");
+const cookies = new Cookies();
 
 
-app.use(cors(
-    // {
-    // origin : ["http://localhost:3000"],
-    // methods : ["POST","GET"],
-    // credentials : true
-    // }
-));
 app.use(express.json());
-// app.use(cookieParser());
-// app.use(bodyParser.json());
-// app.use(session({
-//     secret: 'secret',
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//         secure : false,
-//         maxAge : 1000*60*60*24
-//     }
-// }))
+app.use(cors(
+    {
+    origin:["http://localhost:3000"],
+    methods: ["GET","POST"],
+    credentials: true
+    }
+));
+
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended : true}));
+
+app.use(session({
+    key: "userID",
+    secret: "subscribe",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expries: 60*60*24,
+    },
+}))
 
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
     password: "",
     database: "waste_management"
+})
+
+
+
+app.get("/login", (req,res) => {
+    if (req.session.user){
+        res.send({loggedIn : true, user: req.session.user});
+    }else {
+        res.send({loggedIn : false});
+    }
 })
 
 app.post('/login', (req,res) => {
@@ -48,16 +64,15 @@ app.post('/login', (req,res) => {
             }
 
             if (result.length > 0) {
-                // req.session.username = username;
-                // console.log(req.session.username);
+                cookies.set('User',result,{path:'/'});
                 res.send(result);
-                //return res.json({Login: true})
             } else {
                 res.send({message: "Wrong username/password combination"});
             }
         }
     );
 });
+
 
 app.get('/showUser',(req,res) =>{
     db.query("SELECT * FROM users", (err,result) => {
@@ -106,14 +121,6 @@ app.get('/getUID',(req,res) =>{
         }
     });
 });
-
-// app.get('/',(req,res) => {
-//     if(req.session.username){
-//         return res.json({valid:true, username:req.session.username})
-//     }else {
-//         return res.json({valid:false})
-//     }
-// })
 
 app.listen('3001',() =>{
     console.log('Server is running on port 3001')
