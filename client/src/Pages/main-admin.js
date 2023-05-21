@@ -7,34 +7,36 @@ import Swal from "sweetalert2";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import UserList from "../component/UserList";
 import ".//pages.css"
+import Cookies from 'universal-cookie';
 
 function MainAdmin(){
     const navigate = useNavigate();
-    const [name,setName] = useState('');
     const [show,toggleShow] = useState(true)
-
     const [userList,setUserList] = useState([]);
-    const showUsers = () => {
-        axios.get("http://localhost:3001/showUser").then((response) => {
-            setUserList(response.data);
-        })
+    const cookies = new Cookies();
+    const [name,setName] = useState({});
+    const logout = () =>{
+         cookies.remove('User',{path:'/'})
+         navigate('/login');
     }
 
-    // useEffect(()=>{
-    //     axios.get('http://localhost:3001').then(res => {
-    //         if(res.data.valid){
-    //             setName(res.data.username);
-    //         }else {
-    //             navigate('/');
-    //         }
-    //     }).catch(err => console.log(err))},[])
-
-
+    useEffect(()=>{
+        if (cookies.get('User') == undefined){
+            navigate('/login');
+        }else {
+            setName(cookies.get('User'));
+        }
+        console.log(cookies.get('User'));
+    },[])
     return(
         <div className="App container">
             <Navbar/>
-            <h1>Hello ! : {name}</h1>
-            <h1>This is Main Admin Page. <a className='btn btn-secondary' href='/Login' role='button' style={{marginRight: 2 + 'em'}}>Go to Login</a></h1>
+            <div style={{justifyContent:"flex-end",display:"flex"}}>
+                <div className='profile-box'>
+                    <p>Admin : {name.Surname} </p>
+                    <button className='btn btn-secondary' onClick={logout}>Logout</button>
+                </div>
+            </div>
 
             <div className='row'>
                 <div className='col border'>
@@ -56,7 +58,7 @@ function MainAdmin(){
                     </button>
                     <br/><br/>
                     {!show &&
-                        <UserList/>
+                            <UserList/>
                     }
                 </div>
             </div>

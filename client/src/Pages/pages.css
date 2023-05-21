@@ -1,0 +1,12 @@
+.profile-box{
+    border-style: solid;
+    border-color: #282c34;
+    border-width: 1px;
+    width: 200px;
+    height: 100px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+
+}

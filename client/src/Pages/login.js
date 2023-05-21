@@ -3,13 +3,18 @@ import axios from "axios";
 import Navbar from "../component/navbar";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import Swal from "sweetalert2";
+import Cookies from 'universal-cookie';
+
 function Login() {
     //axios.defaults.withCredentials = true;
     const navigate = useNavigate();
+    const cookies = new Cookies();
 
     const  [username,setUsername] = useState("");
     const  [password,setPassword] = useState("");
     const  [loginStatus,setLoginStatus] = useState("")
+
+    axios.defaults.withCredentials = true;
 
     const login = () => {
         axios.post("http://localhost:3001/login", {
@@ -25,17 +30,25 @@ function Login() {
                 })
                 //setLoginStatus(response.data.message)
             }else {
+                cookies.set('User',response.data[0],{path:'/'});
                 if (response.data[0].Role === "A"){
                     navigate('/mainAdmin');
-                    setLoginStatus(response.data[0].Surname)
                 }else {
                     navigate('/mainOwner');
-                    setLoginStatus(response.data[0].Surname)
                 }
             }
         });
 
     };
+
+    useEffect(()=>{
+        axios.get("http://localhost:3001/login").then((response) => {
+            if(response.data.loggedIn == true){
+                setLoginStatus(response.data.user[0].username)
+            }
+
+        })
+    },[])
 
     return (
         <div className="App container">

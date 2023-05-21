@@ -69,15 +69,6 @@ function AddUser(){
         })
         Swal.fire({
             title : "Generate Success !",
-            // text :"UID : " + uid,
-            // confirmButtonText: 'Copy',
-            // }).then((result) => {
-            //     if(result.isConfirmed){
-            //         navigator.clipboard.writeText(getuid.map((val,key) =>{return(val.UID)}))
-            //         Swal.fire({
-            //             title : 'Copied !'
-            //         })
-            //     }
         })
 
         console.log(getuid)
