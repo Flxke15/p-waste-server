@@ -11,7 +11,7 @@ const cookieParser = require("cookie-parser");
 const Cookies = require("universal-cookie");
 const cookies = new Cookies();
 
-
+//app.options('*',cors())
 app.use(express.json());
 app.use(cors(
     {
