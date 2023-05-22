@@ -40,6 +40,21 @@ function MainAdmin(){
                 </div>
             </div>
 
+            <div className='row border'>
+                    <div className='row'>
+                        <div className='col'>
+                            <h1>จุดให้บริการ</h1>
+                        </div>
+                        <div className='col' style={{display:"flex",justifyContent:"flex-end"}}>
+                            <button className='btn btn-success'><a href='/addPoint'></a>เพิ่มจุดให้บริการ</button>
+                        </div>
+                    </div>
+
+                    <div className='row'>
+                        <Point/>
+                    </div>
+            </div>
+
             <div className='row'>
                 <div className='col border' >
                     <h1>History</h1>
@@ -49,33 +64,23 @@ function MainAdmin(){
                     <h1>Information</h1>
                 </div>
             </div>
-            <div className='row'>
-                <div className='col border'>
-                    <div className='row'>
-                        <div className='col'>
-                            <h1>Point</h1>
-                        </div>
-                        <div className='col'>
-                            <a className='btn btn-success' href='/addPoint' role='button' style={{display:"flex",justifyContent:"flex-end"}}>AddPoint</a>
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <Point/>
-                    </div>
 
-                </div>
-                <div className='col border'>
+            <div className='row border'>
+                <div className='row'>
                     <h1>User</h1>
-                    <a className='btn btn-success' href='/addUser' role='button' style={{marginRight: 2 + 'em'}}>AddUser</a>
-                    <button className={'btn btn-primary'} onClick={() =>toggleShow(!show)} style={{marginRight: 2 + 'em'}}>
+                </div>
+                <div className='row'>
+                    <a className='btn btn-success' href='/addUser' role='button' style={{display:"flex"}}>AddUser</a>
+                    <button className={'btn btn-primary'} onClick={() =>toggleShow(!show)} style={{display:"flex",textAlign:"center"}}>
                         {show ? "Show User" : "Hide" }
                     </button>
                     <br/><br/>
                     {!show &&
-                            <UserList/>
+                        <UserList/>
                     }
                 </div>
             </div>
+
             <Footer/>
         </div>
     )

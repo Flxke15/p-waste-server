@@ -13,18 +13,15 @@ function AddUser(){
     const [point,setPoint] = useState("");
     const [name,setName] = useState("");
     const [address,setAddress] = useState("");
-    const [photo,setPhoto] = useState("");
     const [link,setLink] = useState("");
 
     const [pointList,setPointList] = useState([]);
-
 
     const addpoint = () => {
         axios.post('http://localhost:3001/addPoint', {
             point : point,
             name : name,
             address : address,
-            photo : photo,
             link : link
         }).then(() => {
             setPointList([
@@ -33,7 +30,6 @@ function AddUser(){
                     point : point,
                     name : name,
                     address : address,
-                    photo : photo,
                     link : link
                 }
             ])
@@ -85,16 +81,6 @@ function AddUser(){
                             placeholder='Enter Address...'
                             onChange={(event) => {
                                 setAddress(event.target.value)
-                            }}
-                        />
-                    </div>
-                    <div className='mb-3'>
-                        <label htmlFor='photo' className='form-label'>Photo :</label>
-                        <input
-                            type='file'
-                            className='form-control'
-                            onChange={(event) => {
-                                setPhoto(event.target.value)
                             }}
                         />
                     </div>

@@ -63,7 +63,6 @@ function AddUser(){
 
     const getUID = async(event) => {
         event.preventDefault(false);
-
         await axios.get("http://localhost:3001/getUID").then((response) => {
             setGetUID(response.data);
         })
@@ -105,7 +104,7 @@ function AddUser(){
                         />
                     </div>
                     <div className='mb-3'>
-                        <label htmlFor='uid' className='form-label'>UID :
+                        <label htmlFor='uid' className='form-label'><mark><u>Please Scan RFID before Press Scan UID button</u></mark>
                             <button className='btn btn-primary' style={{marginLeft : 1 + 'em'}} onClick={getUID}>Scan UID</button>
                         </label>
                         <div>

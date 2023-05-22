@@ -50,6 +50,7 @@ function Point(){
                     <th scope='col'>#</th>
                     <th scope='col'>Name</th>
                     <th scope='col'>Address</th>
+                    <th scope='col'>Status</th>
                     <th scope='col'>Map</th>
                     <th scope='col'>Delete</th>
                 </tr>
@@ -62,6 +63,7 @@ function Point(){
                             <th scope='row'>{val.Point}</th>
                             <td>{val.Name}</td>
                             <td>{val.Address}</td>
+                            <td>{val.Status}</td>
                             <td><a href={val.Link} type='button' target='_blank' className='btn btn-primary'>Link</a></td>
                             <td><button className='btn btn-danger' onClick={() => {deletePoint(val.ID)}} style={{marginBottom:2 +'em'}}>Delete</button></td>
                         </tr>

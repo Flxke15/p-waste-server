@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors(
     {
     origin:["http://localhost:3000"],
-    methods: ["GET","POST","DELETE"],
+    methods: ["GET","POST","DELETE","PUT"],
     credentials: true
     }
 ));
@@ -125,11 +125,10 @@ app.post('/addPoint', (req,res) => {
     const point = req.body.point;
     const name = req.body.name;
     const address = req.body.address;
-    const photo = req.body.photo;
     const link = req.body.link;
 
-    db.query("INSERT INTO scanpoint (Point,Name,Address,Photo,Link) VALUES (?,?,?,?,?)",
-        [point,name,address,photo,link],
+    db.query("INSERT INTO scanpoint (Point,Name,Address,Status,Link) VALUES (?,?,?,?,?)",
+        [point,name,address,"First Register This Point.",link],
         (err,result) => {
             if (err) {
                 console.log(err)
@@ -170,6 +169,7 @@ app.get('/getUID',(req,res) =>{
         }
     });
 });
+
 
 app.listen('3001',() =>{
     console.log('Server is running on port 3001')
