@@ -46,13 +46,23 @@ function MainAdmin(){
                     <History/>
                 </div>
                 <div className='col border'>
-                    <h1>เวลาการทำงาน</h1>
+                    <h1>Information</h1>
                 </div>
             </div>
             <div className='row'>
                 <div className='col border'>
-                    <h1>Point</h1>
-                    <Point/>
+                    <div className='row'>
+                        <div className='col'>
+                            <h1>Point</h1>
+                        </div>
+                        <div className='col'>
+                            <a className='btn btn-success' href='/addPoint' role='button' style={{display:"flex",justifyContent:"flex-end"}}>AddPoint</a>
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <Point/>
+                    </div>
+
                 </div>
                 <div className='col border'>
                     <h1>User</h1>

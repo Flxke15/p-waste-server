@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors(
     {
     origin:["http://localhost:3000"],
-    methods: ["GET","POST"],
+    methods: ["GET","POST","DELETE"],
     credentials: true
     }
 ));
@@ -121,9 +121,38 @@ app.post('/adduser', (req,res) => {
         });
 })
 
-app.delete('/delete/:id', (req,res) => {
+app.post('/addPoint', (req,res) => {
+    const point = req.body.point;
+    const name = req.body.name;
+    const address = req.body.address;
+    const photo = req.body.photo;
+    const link = req.body.link;
+
+    db.query("INSERT INTO scanpoint (Point,Name,Address,Photo,Link) VALUES (?,?,?,?,?)",
+        [point,name,address,photo,link],
+        (err,result) => {
+            if (err) {
+                console.log(err)
+            }else {
+                res.send("AddPoint success")
+            }
+        });
+})
+
+app.delete('/deleteUser/:id', (req,res) => {
     const id = req.params.id;
     db.query("DELETE FROM users where ID = ?",id,(err,result) => {
+        if (err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    })
+})
+
+app.delete('/deletePoint/:id', (req,res) => {
+    const id = req.params.id;
+    db.query("DELETE FROM scanpoint where ID = ?",id,(err,result) => {
         if (err){
             console.log(err);
         }else {
