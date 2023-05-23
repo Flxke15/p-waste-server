@@ -5,6 +5,36 @@ import Swal from "sweetalert2";
 function Point(){
     const [pointlist,setPointList] = useState([]);
 
+    const [lastHistory,setLastHistory] = useState([]);
+    const [roleUID,setRoleUID] = useState([]);
+    const [status,setStatus] = useState([]);
+    useEffect(()=>{
+        axios.get("http://localhost:3001/getLastHistory").then((response) => {
+            setLastHistory(response.data);
+        })
+        lastHistory.map((his,key) => {
+            axios.get(`http://localhost:3001/checkRole/${his.UID}`).then((response) => {
+                setRoleUID(response.data);
+            })
+            roleUID.map((role,key)=>{
+                if (role.Role == "U"){
+                    axios.put(`http://localhost:3001/updateStatusU/${his.Point}`).then((response) => {
+                        setStatus(response.data);
+                    })
+                }
+                else if (role.Role == "C"){
+                    axios.put(`http://localhost:3001/updateStatusC/${his.Point}`).then((response) => {
+                        setStatus(response.data);
+                    })
+                }else {}
+
+            })
+        })
+
+
+
+    },[lastHistory])
+
     const showPoint = () =>{
         axios.get("http://localhost:3001/showPoint").then((response) =>{
             setPointList(response.data)
@@ -47,7 +77,7 @@ function Point(){
             <table className='table'>
                 <thead>
                 <tr>
-                    <th scope='col'>#</th>
+                    <th scope='col'>Point</th>
                     <th scope='col'>Name</th>
                     <th scope='col'>Address</th>
                     <th scope='col'>Status</th>

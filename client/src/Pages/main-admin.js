@@ -46,7 +46,7 @@ function MainAdmin(){
                             <h1>จุดให้บริการ</h1>
                         </div>
                         <div className='col' style={{display:"flex",justifyContent:"flex-end"}}>
-                            <button className='btn btn-success'><a href='/addPoint'></a>เพิ่มจุดให้บริการ</button>
+                            <a className='btn btn-success' href='/addPoint' role='button' style={{display:"flex"}}>เพิ่มจุดให้บริการ</a>
                         </div>
                     </div>
 
