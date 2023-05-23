@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import {Routes, Route, useNavigate} from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 function Point(){
     const [pointlist,setPointList] = useState([]);
@@ -8,6 +10,7 @@ function Point(){
     const [lastHistory,setLastHistory] = useState([]);
     const [roleUID,setRoleUID] = useState([]);
     const [status,setStatus] = useState([]);
+
     useEffect(()=>{
         axios.get("http://localhost:3001/getLastHistory").then((response) => {
             setLastHistory(response.data);
@@ -27,13 +30,9 @@ function Point(){
                         setStatus(response.data);
                     })
                 }else {}
-
             })
         })
-
-
-
-    },[lastHistory])
+    },[])
 
     const showPoint = () =>{
         axios.get("http://localhost:3001/showPoint").then((response) =>{
@@ -72,36 +71,36 @@ function Point(){
         })
     }
 
-    return(
-        <div>
-            <table className='table'>
-                <thead>
-                <tr>
-                    <th scope='col'>Point</th>
-                    <th scope='col'>Name</th>
-                    <th scope='col'>Address</th>
-                    <th scope='col'>Status</th>
-                    <th scope='col'>Map</th>
-                    <th scope='col'>Delete</th>
-                </tr>
-                </thead>
-                {showPoint()}
-                {pointlist.map((val,key) => {
-                    return(
-                        <tbody>
-                        <tr>
-                            <th scope='row'>{val.Point}</th>
-                            <td>{val.Name}</td>
-                            <td>{val.Address}</td>
-                            <td>{val.Status}</td>
-                            <td><a href={val.Link} type='button' target='_blank' className='btn btn-primary'>Link</a></td>
-                            <td><button className='btn btn-danger' onClick={() => {deletePoint(val.ID)}} style={{marginBottom:2 +'em'}}>Delete</button></td>
-                        </tr>
-                        </tbody>
-                    )
-                })}
-            </table>
-        </div>
-    )
+        return(
+            <div>
+                <table className='table'>
+                    <thead>
+                    <tr>
+                        <th scope='col'>Point</th>
+                        <th scope='col'>Name</th>
+                        <th scope='col'>Address</th>
+                        <th scope='col'>Status</th>
+                        <th scope='col'>Map</th>
+                        <th scope='col'>Delete</th>
+                    </tr>
+                    </thead>
+                    {showPoint()}
+                    {pointlist.map((val,key) => {
+                        return(
+                            <tbody>
+                            <tr>
+                                <th scope='row'>{val.Point}</th>
+                                <td>{val.Name}</td>
+                                <td>{val.Address}</td>
+                                <td>{val.Status}</td>
+                                <td><a href={val.Link} type='button' target='_blank' className='btn btn-primary'>Link</a></td>
+                                <td><button className='btn btn-danger' onClick={() => {deletePoint(val.ID)}} style={{marginBottom:2 +'em'}}>Delete</button></td>
+                            </tr>
+                            </tbody>
+                        )
+                    })}
+                </table>
+            </div>
+        )
 }
 export  default Point;

@@ -10,6 +10,7 @@ import ".//pages.css"
 import Cookies from 'universal-cookie';
 import Point from "../component/Point";
 import History from "../component/History";
+import Information from "../component/Information";
 
 function MainAdmin(){
     const navigate = useNavigate();
@@ -30,17 +31,18 @@ function MainAdmin(){
         }
         console.log(cookies.get('User'));
     },[])
-    return(
-        <div className="App container">
-            <Navbar/>
-            <div style={{justifyContent:"flex-end",display:"flex"}}>
-                <div className='profile-box'>
-                    <p>Admin : {name.Surname} </p>
-                    <button className='btn btn-secondary' onClick={logout}>Logout</button>
-                </div>
-            </div>
 
-            <div className='row border'>
+        return(
+            <div className="App container">
+                <Navbar/>
+                <div style={{justifyContent:"flex-end",display:"flex"}}>
+                    <div className='profile-box'>
+                        <p>Admin : {name.Surname} </p>
+                        <button className='btn btn-secondary' onClick={logout}>Logout</button>
+                    </div>
+                </div>
+
+                <div className='row border'>
                     <div className='row'>
                         <div className='col'>
                             <h1>จุดให้บริการ</h1>
@@ -53,37 +55,38 @@ function MainAdmin(){
                     <div className='row'>
                         <Point/>
                     </div>
-            </div>
-
-            <div className='row'>
-                <div className='col border' >
-                    <h1>History</h1>
-                    <History/>
                 </div>
-                <div className='col border'>
-                    <h1>Information</h1>
-                </div>
-            </div>
 
-            <div className='row border'>
                 <div className='row'>
-                    <h1>User</h1>
+                    <div className='col border' >
+                        <h1>History</h1>
+                        <History/>
+                    </div>
+                    <div className='col border'>
+                        <h1>Information</h1>
+                        <Information/>
+                    </div>
                 </div>
-                <div className='row'>
-                    <a className='btn btn-success' href='/addUser' role='button' style={{display:"flex"}}>AddUser</a>
-                    <button className={'btn btn-primary'} onClick={() =>toggleShow(!show)} style={{display:"flex",textAlign:"center"}}>
-                        {show ? "Show User" : "Hide" }
-                    </button>
-                    <br/><br/>
-                    {!show &&
-                        <UserList/>
-                    }
-                </div>
-            </div>
 
-            <Footer/>
-        </div>
-    )
+                <div className='row border'>
+                    <div className='row'>
+                        <h1>User</h1>
+                    </div>
+                    <div className='row'>
+                        <a className='btn btn-success' href='/addUser' role='button' style={{display:"flex"}}>AddUser</a>
+                        <button className={'btn btn-primary'} onClick={() =>toggleShow(!show)} style={{display:"flex",textAlign:"center"}}>
+                            {show ? "Show User" : "Hide" }
+                        </button>
+                        <br/><br/>
+                        {!show &&
+                            <UserList/>
+                        }
+                    </div>
+                </div>
+
+                <Footer/>
+            </div>
+        )
 }
 
 export default MainAdmin;

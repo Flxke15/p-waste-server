@@ -2,15 +2,49 @@ import React, {useState} from "react";
 import axios from "axios";
 import Navbar from "../component/navbar";
 import Footer from "../component/footer";
+import {Routes, Route, useNavigate} from 'react-router-dom';
+import Point from "../component/Point";
+import History from "../component/History";
+import UserList from "../component/UserList";
 
 function MainUser() {
-    const [userList,setUserList] = useState([]);
+    const navigate = useNavigate();
+    const gotologin = () => {
+        navigate('/Login')
+    }
 
     return(
-        <div>
+        <div className='container'>
             <Navbar/>
-            <a className='btn btn-secondary' href='/Login' role='button' style={{marginRight: 2 + 'em'}}>Go to Login</a>
-            <h1>This is Main User Page.</h1>
+            <div style={{justifyContent:"flex-end",display:"flex"}}>
+                    <button className='btn btn-primary' onClick={gotologin} style={{marginBottom:"10px"}}>Go to Login</button>
+            </div>
+
+            <div className='row border'>
+                <div className='row'>
+                    <div className='col'>
+                        <h1>จุดให้บริการ</h1>
+                    </div>
+                    <div className='col' style={{display:"flex",justifyContent:"flex-end"}}>
+                        <a className='btn btn-success' href='/addPoint' role='button' style={{display:"flex"}}>เพิ่มจุดให้บริการ</a>
+                    </div>
+                </div>
+
+                <div className='row'>
+                    <Point/>
+                </div>
+            </div>
+
+            <div className='row'>
+                <div className='col border' >
+                    <h1>History</h1>
+                    <History/>
+                </div>
+                <div className='col border'>
+                    <h1>Information</h1>
+                </div>
+            </div>
+
             <Footer/>
         </div>
     )

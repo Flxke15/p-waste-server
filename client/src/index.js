@@ -17,6 +17,7 @@ import AddUser from "./Pages/AddUser";
 import UserList from "./component/UserList";
 import Footer from "./component/footer";
 import AddPoint from "./Pages/AddPoint";
+import Information from "./component/Information";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
     {
         path : "/addPoint",
         element : <AddPoint/>,
+    },
+    {
+        path : "/Information",
+        element : <Information/>,
     },
 ]);
 
