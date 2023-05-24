@@ -53,9 +53,11 @@ const router = createBrowserRouter([
         element : <AddPoint/>,
     },
     {
-        path : "/Information",
+        path : "/InformationOwner",
         element : <Information/>,
     },
+
+
 ]);
 
 

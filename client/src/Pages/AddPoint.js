@@ -52,11 +52,11 @@ function AddUser(){
             <div className='adduser' style={{marginTop:"10px"}}>
                 <form action='' >
                     <div className='mb-3'>
-                        <label htmlFor='point' className='form-label'>Point :</label>
+                        <label htmlFor='point' className='form-label'>PointOwner :</label>
                         <input
                             type='text'
                             className='form-control'
-                            placeholder='Enter Point...'
+                            placeholder='Enter PointOwner...'
                             onChange={(event) => {
                                 setPoint(event.target.value)
                             }}

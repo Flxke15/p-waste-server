@@ -6,6 +6,7 @@ import {Routes, Route, useNavigate} from 'react-router-dom';
 import Point from "../component/Point";
 import History from "../component/History";
 import UserList from "../component/UserList";
+import PointUser from "../component/user/Point-User";
 
 function MainUser() {
     const navigate = useNavigate();
@@ -21,17 +22,12 @@ function MainUser() {
             </div>
 
             <div className='row border'>
-                <div className='row'>
-                    <div className='col'>
+                <div className='row' style={{padding:"20px"}}>
                         <h1>จุดให้บริการ</h1>
-                    </div>
-                    <div className='col' style={{display:"flex",justifyContent:"flex-end"}}>
-                        <a className='btn btn-success' href='/addPoint' role='button' style={{display:"flex"}}>เพิ่มจุดให้บริการ</a>
-                    </div>
                 </div>
 
                 <div className='row'>
-                    <Point/>
+                    <PointUser/>
                 </div>
             </div>
 

@@ -105,7 +105,7 @@ app.get('/showHistory',(req,res) =>{
 });
 
 app.get('/getLastHistory',(req,res) =>{
-    db.query("SELECT UID,Point FROM history ORDER BY No DESC LIMIT 1", (err,result) => {
+    db.query("SELECT UID,PointOwner FROM history ORDER BY No DESC LIMIT 1", (err,result) => {
         if(err){
             console.log(err);
         }else {
@@ -127,7 +127,7 @@ app.get('/checkRole/:uid',(req,res) =>{
 
 app.put('/updateStatusU/:point',(req,res) => {
     const point = req.params.point;
-    db.query("UPDATE scanpoint SET Status = ? WHERE Point = ?",["รอการดำเนินการ",point] , (err,result) => {
+    db.query("UPDATE scanpoint SET Status = ? WHERE PointOwner = ?",["รอการดำเนินการ",point] , (err,result) => {
         if (err) {
             console.log(err);
         }else {
@@ -138,7 +138,7 @@ app.put('/updateStatusU/:point',(req,res) => {
 
 app.put('/updateStatusC/:point',(req,res) => {
     const point = req.params.point;
-    db.query("UPDATE scanpoint SET Status = ? WHERE Point = ?",["ดำเนินการเสร็จเรียบร้อยแล้ว",point] , (err,result) => {
+    db.query("UPDATE scanpoint SET Status = ? WHERE PointOwner = ?",["ดำเนินการเสร็จเรียบร้อยแล้ว",point] , (err,result) => {
         if (err) {
             console.log(err);
         }else {
@@ -170,8 +170,8 @@ app.post('/addPoint', (req,res) => {
     const address = req.body.address;
     const link = req.body.link;
 
-    db.query("INSERT INTO scanpoint (Point,Name,Address,Status,Link) VALUES (?,?,?,?,?)",
-        [point,name,address,"First Register This Point.",link],
+    db.query("INSERT INTO scanpoint (PointOwner,Name,Address,Status,Link) VALUES (?,?,?,?,?)",
+        [point,name,address,"First Register This PointOwner.",link],
         (err,result) => {
             if (err) {
                 console.log(err)
