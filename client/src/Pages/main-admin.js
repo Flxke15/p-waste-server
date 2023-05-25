@@ -5,12 +5,12 @@ import axios from "axios";
 import {useState,useEffect} from "react";
 import Swal from "sweetalert2";
 import {Routes, Route, useNavigate} from 'react-router-dom';
-import UserList from "../component/UserList";
 import ".//pages.css"
 import Cookies from 'universal-cookie';
-import Point from "../component/Point";
-import History from "../component/History";
+import Point from "../component/admin/Point";
 import Information from "../component/Information";
+import UserList from "../component/admin/UserList";
+import History from "../component/History";
 
 function MainAdmin(){
     const navigate = useNavigate();

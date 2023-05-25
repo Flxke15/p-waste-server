@@ -3,7 +3,10 @@ import Navbar from "../component/navbar";
 import Footer from "../component/footer";
 import Cookies from 'universal-cookie';
 import {Routes, Route, useNavigate} from 'react-router-dom';
-import UserList from "../component/UserList";
+import UserList from "../component/admin/UserList";
+import History from "../component/History";
+import Information from "../component/Information";
+import PointOwner from "../component/owner/Point-Owner";
 
 function MainOwner(){
     const cookies = new Cookies();
@@ -33,23 +36,29 @@ function MainOwner(){
                     <button className='btn btn-secondary' onClick={logout}>Logout</button>
                 </div>
             </div>
-            <div className='row'>
-                <div className='col border'>
+
+            <div className='row border style={{padding:"20px"}}'>
+                <div className='col border' style={{padding:"20px"}}>
                     <h1>History</h1>
+                    <History/>
                 </div>
-                <div className='col border'>
+                <div className='col border' style={{padding:"20px"}}>
                     <h1>เวลาการทำงาน</h1>
+                    <Information/>
                 </div>
             </div>
-            <div className='row'>
-                <div className='col border'>
+
+            <div className='row border' style={{padding:"20px"}}>
+                <div className='col'>
                     <h1>Point</h1>
-                </div>
-                <div className='col border'>
-                    <h1>User</h1>
-                    <br/><br/>
+                    <PointOwner/>
                 </div>
             </div>
+
+            <div className='row border' style={{padding:"20px"}}>
+                <h1>สรุปรายเดือน</h1>
+            </div>
+
             <Footer/>
         </div>
     )

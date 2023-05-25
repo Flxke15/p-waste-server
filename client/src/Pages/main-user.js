@@ -3,10 +3,11 @@ import axios from "axios";
 import Navbar from "../component/navbar";
 import Footer from "../component/footer";
 import {Routes, Route, useNavigate} from 'react-router-dom';
-import Point from "../component/Point";
-import History from "../component/History";
-import UserList from "../component/UserList";
+import Information from "../component/Information";
 import PointUser from "../component/user/Point-User";
+import History from "../component/History";
+
+
 
 function MainUser() {
     const navigate = useNavigate();
@@ -38,6 +39,7 @@ function MainUser() {
                 </div>
                 <div className='col border'>
                     <h1>Information</h1>
+                    <Information/>
                 </div>
             </div>
 

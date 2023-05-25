@@ -81,7 +81,6 @@ function PointOwner(){
                         <th scope='col'>Address</th>
                         <th scope='col'>Status</th>
                         <th scope='col'>Map</th>
-                        <th scope='col'>Delete</th>
                     </tr>
                     </thead>
                     {showPoint()}
@@ -94,7 +93,6 @@ function PointOwner(){
                                 <td>{val.Address}</td>
                                 <td>{val.Status}</td>
                                 <td><a href={val.Link} type='button' target='_blank' className='btn btn-primary'>Link</a></td>
-                                <td><button className='btn btn-danger' onClick={() => {deletePoint(val.ID)}} style={{marginBottom:2 +'em'}}>Delete</button></td>
                             </tr>
                             </tbody>
                         )

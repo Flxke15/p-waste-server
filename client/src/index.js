@@ -14,7 +14,7 @@ import {
 } from "react-router-dom";
 import Login from "./Pages/login";
 import AddUser from "./Pages/AddUser";
-import UserList from "./component/UserList";
+import UserList from "./component/admin/UserList";
 import Footer from "./component/footer";
 import AddPoint from "./Pages/AddPoint";
 import Information from "./component/Information";
@@ -53,7 +53,7 @@ const router = createBrowserRouter([
         element : <AddPoint/>,
     },
     {
-        path : "/InformationOwner",
+        path : "/Information",
         element : <Information/>,
     },
 
