@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 
 function UserList(){
+
     const navigate = useNavigate();
     const [userList,setUserList] = useState([]);
     const showUsers = () => {
@@ -21,7 +22,7 @@ function UserList(){
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3001/delete/${id}`).then((response) => {
+                    axios.delete(`http://localhost:3001/deleteUser/${id}`).then((response) => {
                     setUserList(
                         userList.filter((val) => {
                             return val.id != id;
@@ -29,7 +30,13 @@ function UserList(){
                     )
                     window.location.reload(false);
                 })
-
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Delete Success',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             } else if (result.isDenied) {
                 Swal.fire('Changes are not delete', '', 'info')
             }
