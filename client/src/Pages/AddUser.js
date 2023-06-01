@@ -10,102 +10,113 @@ function AddUser(){
 
     const navigate = useNavigate();
 
+    //use for add data to database
     const [surname,setSurname] = useState("");
     const [lastname,setLastname] = useState("");
-    const [uid,setUID] = useState("");
+    const [uid,setUID] = useState(""); 
     const [address,setAddress] = useState("");
+
     const [userlist,setUserlist] = useState([]);
 
-    const [getuid,setGetUID] = useState([]);
-    const [getalluid,setGetAllUID] = useState([]);
-    const [userList,setUserList] = useState([]);
+    const [lengthUID,setLengthUID] = useState([]);
+    const [getuid,setGetUID] = useState([]); //use for get last uid
+    const [getalluid,setGetAllUID] = useState([]); //use for get length data before scan
+    const [state,setState] = useState(0);
 
-
-    const adduser = () => {
-        axios.post('http://localhost:3001/adduser', {
-            surname : surname,
-            lastname : lastname,
-            uid : uid,
-            address : address
-        }).then(() => {
-            setUserlist([
-                ...userlist,
-                {
-                    surname : surname,
-                    lastname : lastname,
-                    uid : uid,
-                    address : address
-                }
-            ])
-        })
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Your work has been saved',
-            showConfirmButton: false,
-            timer: 1500
-        })
-        navigate('/mainAdmin');
-    }
-
-    // useEffect(()=>{
-    //     getuid.map((val,key)=>{
-    //         setUID(val.UID)
-    //     })
-    //
-    // },[getuid])
-
-    useEffect(()=>{
-            axios.get("http://localhost:3001/getAllUID").then((response) => {
+    useEffect(() =>{
+        axios.get("http://localhost:3001/getAllUID").then((response) => {
             setGetAllUID(response.data);
         })
-        console.log(getalluid)
-    },[getalluid])
+    },[])
 
     useEffect(()=>{
-            axios.get("http://localhost:3001/getUID").then((response) => {
+        axios.get("http://localhost:3001/getAllUID").then((response) => {
+            setLengthUID(response.data);
+        })
+        if (getalluid.length < lengthUID.length){
+            setState(1)
+        }
+    },[lengthUID,state])
+
+    useEffect(()=>{
+        axios.get("http://localhost:3001/getUID").then((response) => {
             setGetUID(response.data);
         })
         getuid.map((val,key)=>{
             setUID(val.UID)
         })
-        console.log(uid)
-    },[getuid])
+    },[getuid,uid])
 
-    const getUID = async(event) => {
-        event.preventDefault(false);
-        await axios.get("http://localhost:3001/getUID").then((response) => {
-            setGetUID(response.data);
-        })
-        for (let i = 0; i< getalluid.length-1;i++){
+    // console.log(getalluid.length)
+    // console.log(lengthUID.length)
+    // console.log("state : " + state)
+    // console.log("getuid : " + getuid)
+    // console.log("uid : " + uid)
 
-            console.log(Object.values(getalluid[i]).toString())
-            console.log(uid.toString())
-
-          if (Object.values(getalluid[i]).toString() === uid.toString()){
-              console.log("Error tag")
-              Swal.fire({
-                  title : "Error!",
-                  text : "This tag is already exists."
-              })
-              break
-          }else {
-              console.log("OK")
-              Swal.fire({
-                  title : "Generate Success !",
-              })
-          }
-
-        }
-
+    const GETUID = (e) => {
+        e.preventDefault(false)
+               if (state === 1){
+                       Swal.fire({
+                           icon : "success",
+                           title : 'Success 🎉',
+                       })
+               }else{
+                   Swal.fire({
+                       icon : "error",
+                       title : 'Error 💀',
+                       html : 'Please Scan RFID before Press Get UID button. <br> or This tag is already exist. ',
+                   })
+               }
     }
 
+    const adduser = (e) => {
+        e.preventDefault(false)
+        if (surname === "" || lastname === "" || address === ""){
+            Swal.fire({
+                icon : "error",
+                title : 'กรุณากรอกข้อมูลให้ครบ'
+            })
+        }else {
+            axios.post('http://localhost:3001/adduser', {
+                surname : surname,
+                lastname : lastname,
+                uid : uid,
+                address : address
+            }).then(() => {
+                setUserlist([
+                    ...userlist,
+                    {
+                        surname : surname,
+                        lastname : lastname,
+                        uid : uid,
+                        address : address
+                    }
+                ])
+            })
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            navigate('/mainAdmin');
+        }
+    }
+
+    const backMain = () => {
+        if (getalluid.length === lengthUID.length){
+            navigate('/mainAdmin');
+        }else {
+            axios.delete('http://localhost:3001/deleteUID')
+            navigate('/mainAdmin');
+        }
+    }
 
     return(
         <div className='App container'>
             <Navbar/>
-
-            <a href='/mainAdmin' role='button' className='btn btn-primary'>Back to home</a>
+            <a role='button' className='btn btn-primary' onClick={backMain}>Back to home</a>
             <div className='adduser'>
                 <form action='' >
                     <div className='mb-3'>
@@ -131,21 +142,10 @@ function AddUser(){
                         />
                     </div>
                     <div className='mb-3'>
-                        <label htmlFor='uid' className='form-label'><mark><u>Please Scan RFID before Press Scan UID button</u></mark>
-                            <button className='btn btn-primary' style={{marginLeft : 1 + 'em'}} onClick={getUID}>Scan UID</button>
+                        <label htmlFor='uid' className='form-label'><mark><u>Please Scan RFID before Press Get UID button</u></mark>
+                            <button className='btn btn-primary' style={{marginLeft : 1 + 'em'}} onClick={GETUID}>GET UID</button>
                         </label>
-                        <div>
-                            <input
-                                type='text'
-                                className='form-control'
-                                placeholder='Enter UID...'
-                                value={uid}
-                                onChange={(event) => {
-                                    setUID(event.target.value)
-                                }}
-                                disabled
-                            />
-                        </div>
+                        {/*<input type="text" className='form-control' value={Object.values(uid)}/>*/}
                     </div>
                     <div className='mb-3'>
                         <label htmlFor='address' className='form-label'>Address :</label>

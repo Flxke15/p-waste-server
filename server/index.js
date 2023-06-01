@@ -203,6 +203,27 @@ app.delete('/deletePoint/:id', (req,res) => {
     })
 })
 
+app.delete('/deleteUIDFromUser/:uid', (req,res) => {
+    const uid = req.params.uid;
+    db.query("DELETE FROM uid where UID = ?",uid,(err,result) => {
+        if (err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    })
+})
+
+app.delete('/deleteUID', (req,res) => {
+    db.query("DELETE FROM uid ORDER BY ID DESC LIMIT 1",(err,result) => {
+        if (err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    })
+})
+
 app.get('/getUID',(req,res) =>{
     db.query("SELECT UID FROM UID ORDER BY ID DESC LIMIT 1", (err,result) => {
         if(err){

@@ -12,7 +12,7 @@ function UserList(){
             setUserList(response.data);
         })
     }
-    const deleteUser = (id) => {
+    const deleteUser = (id,uid) => {
         Swal.fire({
             title: 'Do you want to Delete?',
             showDenyButton: true,
@@ -22,14 +22,18 @@ function UserList(){
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
+                axios.delete(`http://localhost:3001/deleteUIDFromUser/${uid}`).then((response)=>{
+                    window.location.reload(false);
+                })
                     axios.delete(`http://localhost:3001/deleteUser/${id}`).then((response) => {
                     setUserList(
                         userList.filter((val) => {
                             return val.id != id;
                         })
                     )
-                    window.location.reload(false);
-                })
+                        window.location.reload(false);
+                    })
+
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
@@ -63,7 +67,7 @@ function UserList(){
                                 <td>{val.Lastname}</td>
                                 <td>{val.UID}</td>
                                 <td>{val.Address}</td>
-                                <td><button className='btn btn-danger' onClick={() => {deleteUser(val.ID)}} style={{marginBottom:2 +'em'}}>Delete</button></td>
+                                <td><button className='btn btn-danger' onClick={() => {deleteUser(val.ID,val.UID)}} style={{marginBottom:2 +'em'}}>Delete</button></td>
                             </tr>
                             </tbody>
                 )
