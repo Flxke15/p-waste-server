@@ -11,28 +11,29 @@ function Point(){
     const [roleUID,setRoleUID] = useState([]);
     const [status,setStatus] = useState([]);
 
+
     useEffect(()=>{
         axios.get("http://localhost:3001/getLastHistory").then((response) => {
             setLastHistory(response.data);
         })
-        lastHistory.map((his,key) => {
-            axios.get(`http://localhost:3001/checkRole/${his.UID}`).then((response) => {
+        lastHistory.map((valhis,key)=>{
+            axios.get(`http://localhost:3001/checkRole/${valhis.UID}`).then((response) => {
                 setRoleUID(response.data);
             })
-            roleUID.map((role,key)=>{
-                if (role.Role == "U"){
-                    axios.put(`http://localhost:3001/updateStatusU/${his.Point}`).then((response) => {
+            roleUID.map((val,key)=>{
+                if (val.Role === 'C'){
+                    axios.put(`http://localhost:3001/updateStatusC/${valhis.Point}`).then((response) => {
+                        setStatus(response.data);
+                    })
+                }else if (val.Role === 'U'){
+                    axios.put(`http://localhost:3001/updateStatusU/${valhis.Point}`).then((response) => {
                         setStatus(response.data);
                     })
                 }
-                else if (role.Role == "C"){
-                    axios.put(`http://localhost:3001/updateStatusC/${his.Point}`).then((response) => {
-                        setStatus(response.data);
-                    })
-                }else {}
             })
         })
-    },[])
+    })
+
 
     const showPoint = () =>{
         axios.get("http://localhost:3001/showPoint").then((response) =>{

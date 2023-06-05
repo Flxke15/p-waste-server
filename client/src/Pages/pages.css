@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap');
+
+body{
+    /*background: whitesmoke;*/
+    background: whitesmoke;
+    font-family: 'Kanit', sans-serif;
+}
+
 .profile-box{
     border-style: solid;
     border-color: #282c34;
@@ -14,6 +24,22 @@
     padding: 20px;
 }
 
-h1{
+/*a{*/
+/*    font-family: 'Inconsolata', monospace;*/
+/*}*/
+
+/*label{*/
+/*    font-family: 'Inconsolata', monospace;*/
+/*    font-size: 25px;*/
+/*}*/
+
+/*input{*/
+/*    font-family: 'Inconsolata', monospace;*/
+/*    font-size: 20px;*/
+/*}*/
+
+/*adminCss*/
+.admin-point{
+    /*font-family: 'Inconsolata', monospace;*/
     font-family: 'Kanit', sans-serif;
 }

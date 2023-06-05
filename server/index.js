@@ -105,7 +105,7 @@ app.get('/showHistory',(req,res) =>{
 });
 
 app.get('/getLastHistory',(req,res) =>{
-    db.query("SELECT UID,PointOwner FROM history ORDER BY No DESC LIMIT 1", (err,result) => {
+    db.query("SELECT * FROM history ORDER BY No DESC LIMIT 1", (err,result) => {
         if(err){
             console.log(err);
         }else {
@@ -116,7 +116,7 @@ app.get('/getLastHistory',(req,res) =>{
 
 app.get('/checkRole/:uid',(req,res) =>{
     const uid = req.params.uid;
-    db.query("SELECT Role FROM users WHERE UID=?",uid, (err,result) => {
+    db.query("SELECT * FROM uid WHERE UID=?",uid, (err,result) => {
         if(err){
             console.log(err);
         }else {
@@ -127,7 +127,7 @@ app.get('/checkRole/:uid',(req,res) =>{
 
 app.put('/updateStatusU/:point',(req,res) => {
     const point = req.params.point;
-    db.query("UPDATE scanpoint SET Status = ? WHERE PointOwner = ?",["รอการดำเนินการ",point] , (err,result) => {
+    db.query("UPDATE scanpoint SET Status = ? WHERE Point = ?",["รอการดำเนินการ",point] , (err,result) => {
         if (err) {
             console.log(err);
         }else {
@@ -138,7 +138,7 @@ app.put('/updateStatusU/:point',(req,res) => {
 
 app.put('/updateStatusC/:point',(req,res) => {
     const point = req.params.point;
-    db.query("UPDATE scanpoint SET Status = ? WHERE PointOwner = ?",["ดำเนินการเสร็จเรียบร้อยแล้ว",point] , (err,result) => {
+    db.query("UPDATE scanpoint SET Status = ? WHERE Point = ?",["ดำเนินการเสร็จเรียบร้อยแล้ว",point] , (err,result) => {
         if (err) {
             console.log(err);
         }else {

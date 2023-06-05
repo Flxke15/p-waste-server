@@ -23,6 +23,8 @@ function AddUser(){
     const [getalluid,setGetAllUID] = useState([]); //use for get length data before scan
     const [state,setState] = useState(0);
 
+    const [disabled, setDisabled] = useState(false);
+
     useEffect(() =>{
         axios.get("http://localhost:3001/getAllUID").then((response) => {
             setGetAllUID(response.data);
@@ -60,6 +62,7 @@ function AddUser(){
                            icon : "success",
                            title : 'Success 🎉',
                        })
+                   setDisabled(true);
                }else{
                    Swal.fire({
                        icon : "error",
@@ -114,55 +117,60 @@ function AddUser(){
     }
 
     return(
-        <div className='App container'>
+        <div>
             <Navbar/>
-            <a role='button' className='btn btn-primary' onClick={backMain}>Back to home</a>
-            <div className='adduser'>
-                <form action='' >
-                    <div className='mb-3'>
-                        <label htmlFor='surname' className='form-label'>Surname :</label>
-                        <input
-                            type='text'
-                            className='form-control'
-                            placeholder='Enter Surname...'
-                            onChange={(event) => {
-                                setSurname(event.target.value)
-                            }}
-                        />
-                    </div>
-                    <div className='mb-3'>
-                        <label htmlFor='lastname' className='form-label'>Lastname :</label>
-                        <input
-                            type='text'
-                            className='form-control'
-                            placeholder='Enter Lastname...'
-                            onChange={(event) => {
-                                setLastname(event.target.value)
-                            }}
-                        />
-                    </div>
-                    <div className='mb-3'>
-                        <label htmlFor='uid' className='form-label'><mark><u>Please Scan RFID before Press Get UID button</u></mark>
-                            <button className='btn btn-primary' style={{marginLeft : 1 + 'em'}} onClick={GETUID}>GET UID</button>
-                        </label>
-                        {/*<input type="text" className='form-control' value={Object.values(uid)}/>*/}
-                    </div>
-                    <div className='mb-3'>
-                        <label htmlFor='address' className='form-label'>Address :</label>
-                        <input
-                            type='text'
-                            className='form-control'
-                            placeholder='Enter Address...'
-                            onChange={(event) => {
-                                setAddress(event.target.value)
-                            }}
-                        />
-                    </div>
-                    <button className='btn btn-success' onClick={adduser}>Save</button>
-                </form>
+            <div className='App container'>
+
+                <a role='button' className='btn btn-primary' onClick={backMain} style={{marginTop:'20px'}}>Back to home</a>
+                <div className='adduser' style={{marginTop:'50px'}}>
+                    <form action='' >
+                        <div className='mb-3'>
+                            <label htmlFor='surname' className='form-label'>Surname :</label>
+                            <input
+                                type='text'
+                                className='form-control'
+                                placeholder='Enter Surname...'
+                                onChange={(event) => {
+                                    setSurname(event.target.value)
+                                }}
+                            />
+                        </div>
+                        <div className='mb-3'>
+                            <label htmlFor='lastname' className='form-label'>Lastname :</label>
+                            <input
+                                type='text'
+                                className='form-control'
+                                placeholder='Enter Lastname...'
+                                onChange={(event) => {
+                                    setLastname(event.target.value)
+                                }}
+                            />
+                        </div>
+                        <div className='mb-3'>
+                            <label htmlFor='uid' className='form-label'><mark><u>Please Scan RFID before Press Get UID button</u></mark>
+                                <button className='btn btn-primary' style={{marginLeft : 1 + 'em'}} onClick={GETUID} disabled={disabled}>GET UID</button>
+                            </label>
+                            {/*<input type="text" className='form-control' value={Object.values(uid)}/>*/}
+                        </div>
+                        <div className='mb-3'>
+                            <label htmlFor='address' className='form-label'>Address :</label>
+                            <input
+                                type='text'
+                                className='form-control'
+                                placeholder='Enter Address...'
+                                onChange={(event) => {
+                                    setAddress(event.target.value)
+                                }}
+                            />
+                        </div>
+                        <button className='btn btn-success' onClick={adduser} style={{width:'100px',justifyContent:"flex-end"}}>Save</button>
+                    </form>
+                </div>
+
             </div>
-            <Footer/>
+            {/*<Footer/>*/}
         </div>
+
     )
 }
 

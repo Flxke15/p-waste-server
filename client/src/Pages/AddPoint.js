@@ -45,61 +45,63 @@ function AddUser(){
     }
 
     return(
-        <div className='App container'>
+        <div>
             <Navbar/>
-
-            <a href='/mainAdmin' role='button' className='btn btn-primary'>Back to home</a>
-            <div className='adduser' style={{marginTop:"10px"}}>
-                <form action='' >
-                    <div className='mb-3'>
-                        <label htmlFor='point' className='form-label'>PointOwner :</label>
-                        <input
-                            type='text'
-                            className='form-control'
-                            placeholder='Enter PointOwner...'
-                            onChange={(event) => {
-                                setPoint(event.target.value)
-                            }}
-                        />
-                    </div>
-                    <div className='mb-3'>
-                        <label htmlFor='name' className='form-label'>Name :</label>
-                        <input
-                            type='text'
-                            className='form-control'
-                            placeholder='Enter Name...'
-                            onChange={(event) => {
-                                setName(event.target.value)
-                            }}
-                        />
-                    </div>
-                    <div className='mb-3'>
-                        <label htmlFor='address' className='form-label'>Address :</label>
-                        <input
-                            type='text'
-                            className='form-control'
-                            placeholder='Enter Address...'
-                            onChange={(event) => {
-                                setAddress(event.target.value)
-                            }}
-                        />
-                    </div>
-                    <div className='mb-3'>
-                        <label htmlFor='link' className='form-label'>Link :</label>
-                        <input
-                            type='text'
-                            className='form-control'
-                            placeholder='Enter Link...'
-                            onChange={(event) => {
-                                setLink(event.target.value)
-                            }}
-                        />
-                    </div>
-                    <button className='btn btn-success' onClick={addpoint}>Save</button>
-                </form>
+            <div className='App container'  >
+                <a href='/mainAdmin' role='button' className='btn btn-primary' style={{marginTop:'20px'}}>Back to home</a>
+                <div className='adduser' style={{marginTop:"10px"}}>
+                    <form action='' >
+                        <div className='mb-3'>
+                            <label htmlFor='point' className='form-label'>PointOwner :</label>
+                            <input
+                                type='text'
+                                className='form-control'
+                                placeholder='Enter PointOwner...'
+                                onChange={(event) => {
+                                    setPoint(event.target.value)
+                                }}
+                            />
+                        </div>
+                        <div className='mb-3'>
+                            <label htmlFor='name' className='form-label'>Name :</label>
+                            <input
+                                type='text'
+                                className='form-control'
+                                placeholder='Enter Name...'
+                                onChange={(event) => {
+                                    setName(event.target.value)
+                                }}
+                            />
+                        </div>
+                        <div className='mb-3'>
+                            <label htmlFor='address' className='form-label'>Address :</label>
+                            <input
+                                type='text'
+                                className='form-control'
+                                placeholder='Enter Address...'
+                                onChange={(event) => {
+                                    setAddress(event.target.value)
+                                }}
+                            />
+                        </div>
+                        <div className='mb-3'>
+                            <label htmlFor='link' className='form-label'>Link :</label>
+                            <input
+                                type='text'
+                                className='form-control'
+                                placeholder='Enter Link...'
+                                onChange={(event) => {
+                                    setLink(event.target.value)
+                                }}
+                            />
+                        </div>
+                        <button className='btn btn-success' onClick={addpoint} style={{width:'100px'}}>Save</button>
+                    </form>
+                </div>
+                {/*<Footer/>*/}
             </div>
-            <Footer/>
         </div>
+
     )
 }
 

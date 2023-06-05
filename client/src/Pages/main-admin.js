@@ -33,59 +33,66 @@ function MainAdmin(){
     },[])
 
         return(
-            <div className="App container">
+            <div>
                 <Navbar/>
-                <div style={{justifyContent:"flex-end",display:"flex"}}>
-                    <div className='profile-box'>
-                        <p>Admin : {name.Surname} </p>
-                        <button className='btn btn-secondary' onClick={logout}>Logout</button>
-                    </div>
-                </div>
+                <div className="App container">
 
-                <div className='row border'>
-                    <div className='row'>
-                        <div className='col'>
-                            <h1>จุดให้บริการ</h1>
-                        </div>
-                        <div className='col' style={{display:"flex",justifyContent:"flex-end"}}>
-                            <a className='btn btn-success' href='/addPoint' role='button' style={{display:"flex"}}>เพิ่มจุดให้บริการ</a>
+                    <div style={{justifyContent:"flex-end",display:"flex"}}>
+                        <div className='profile-box' style={{marginTop:'10px'}}>
+                            <p>Admin : {name.Surname} </p>
+                            <button className='btn btn-secondary' onClick={logout}>Logout</button>
                         </div>
                     </div>
 
+                    <div className='row border'>
+
+                        <div className='row '>
+                            <div className='col'>
+                                <h1>จุดให้บริการ</h1>
+                            </div>
+                            <div className='col' style={{display:"flex",justifyContent:"flex-end"}}>
+                                <a className='btn btn-success' href='/addPoint' role='button' style={{display:"flex",marginTop:'10px'}}>เพิ่มจุดให้บริการ</a>
+                            </div>
+                        </div>
+
+                        <div className='row'>
+                            <Point/>
+                        </div>
+                    </div>
+
                     <div className='row'>
-                        <Point/>
+                        <div className='col border' >
+                            <h1 className='admin-point'>History</h1>
+                            <History/>
+                        </div>
+                        <div className='col border'>
+                            <h1>Information</h1>
+                            <Information/>
+                        </div>
+                    </div>
+
+                    <div className='row border' style={{marginBottom:'20px'}}>
+                        <div className='row' style={{padding:'20px'}}>
+                            <h1>User</h1>
+                        </div>
+                        <div className='row'>
+                            <div>
+                                <a className='btn btn-success' href='/addUser' role='button' style={{width:'150px',marginRight:'10px'}}>AddUser</a>
+                                <button className={'btn btn-primary'} onClick={() =>toggleShow(!show)} style={{textAlign:"center",width:'150px'}}>
+                                    {show ? "Show User" : "Hide" }
+                                </button>
+                            </div>
+
+                            <br/><br/>
+                            {!show &&
+                                <UserList/>
+                            }
+                        </div>
                     </div>
                 </div>
-
-                <div className='row'>
-                    <div className='col border' >
-                        <h1>History</h1>
-                        <History/>
-                    </div>
-                    <div className='col border'>
-                        <h1>Information</h1>
-                        <Information/>
-                    </div>
-                </div>
-
-                <div className='row border'>
-                    <div className='row'>
-                        <h1>User</h1>
-                    </div>
-                    <div className='row'>
-                        <a className='btn btn-success' href='/addUser' role='button' style={{display:"flex"}}>AddUser</a>
-                        <button className={'btn btn-primary'} onClick={() =>toggleShow(!show)} style={{display:"flex",textAlign:"center"}}>
-                            {show ? "Show User" : "Hide" }
-                        </button>
-                        <br/><br/>
-                        {!show &&
-                            <UserList/>
-                        }
-                    </div>
-                </div>
-
                 <Footer/>
             </div>
+
         )
 }
 

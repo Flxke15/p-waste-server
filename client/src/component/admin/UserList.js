@@ -63,7 +63,7 @@ function UserList(){
                 return(
                             <tbody>
                             <tr>
-                                <th scope='row'>{val.Surname}</th>
+                                <td scope='row'>{val.Surname}</td>
                                 <td>{val.Lastname}</td>
                                 <td>{val.UID}</td>
                                 <td>{val.Address}</td>

@@ -30,35 +30,37 @@ function MainOwner(){
     return(
         <div>
             <Navbar/>
-            <div style={{justifyContent:"flex-end",display:"flex"}}>
-                <div className='profile-box'>
-                    <p>Owner : {name.Surname} </p>
-                    <button className='btn btn-secondary' onClick={logout}>Logout</button>
+            <div className='App container' style={{marginBottom:'20px'}}>
+                <div style={{justifyContent:"flex-end",display:"flex",marginTop:'10px'}}>
+                    <div className='profile-box'>
+                        <p>Owner : {name.Surname} </p>
+                        <button className='btn btn-secondary' onClick={logout}>Logout</button>
+                    </div>
                 </div>
-            </div>
 
-            <div className='row border style={{padding:"20px"}}'>
-                <div className='col border' style={{padding:"20px"}}>
-                    <h1>History</h1>
-                    <History/>
+                <div className='row border' style={{padding:"20px"}}>
+                    <h1>สรุปรายเดือน</h1>
                 </div>
-                <div className='col border' style={{padding:"20px"}}>
-                    <h1>เวลาการทำงาน</h1>
-                    <Information/>
+
+                <div className='row border style={{padding:"20px"}}'>
+                    <div className='col border' style={{padding:"20px"}}>
+                        <h1>History</h1>
+                        <History/>
+                    </div>
+                    <div className='col border' style={{padding:"20px"}}>
+                        <h1>เวลาการทำงาน</h1>
+                        <Information/>
+                    </div>
                 </div>
-            </div>
 
-            <div className='row border' style={{padding:"20px"}}>
-                <div className='col'>
-                    <h1>Point</h1>
-                    <PointOwner/>
+                <div className='row border' style={{padding:"20px"}}>
+                    <div className='col'>
+                        <h1>Point</h1>
+                        <PointOwner/>
+                    </div>
                 </div>
-            </div>
 
-            <div className='row border' style={{padding:"20px"}}>
-                <h1>สรุปรายเดือน</h1>
             </div>
-
             <Footer/>
         </div>
     )
