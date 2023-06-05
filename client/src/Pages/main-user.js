@@ -4,9 +4,8 @@ import Navbar from "../component/navbar";
 import Footer from "../component/footer";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import Information from "../component/Information";
-import PointUser from "../component/user/Point-User";
 import History from "../component/History";
-
+import PointOther from "../component/PointOther";
 
 
 function MainUser() {
@@ -30,7 +29,7 @@ function MainUser() {
                     </div>
 
                     <div className='row'>
-                        <PointUser/>
+                        <PointOther/>
                     </div>
                 </div>
 

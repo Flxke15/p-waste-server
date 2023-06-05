@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
-function Point(){
+function PointOther(){
     const [pointlist,setPointList] = useState([]);
 
     const [lastHistory,setLastHistory] = useState([]);
@@ -71,4 +71,4 @@ function Point(){
         </div>
     )
 }
-export  default Point;
+export  default PointOther;

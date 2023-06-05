@@ -6,7 +6,8 @@ import {Routes, Route, useNavigate} from 'react-router-dom';
 import UserList from "../component/admin/UserList";
 import History from "../component/History";
 import Information from "../component/Information";
-import PointOwner from "../component/owner/Point-Owner";
+import PointOther from "../component/PointOther";
+import Graph from "../component/owner/graph";
 
 function MainOwner(){
     const cookies = new Cookies();
@@ -39,7 +40,8 @@ function MainOwner(){
                 </div>
 
                 <div className='row border' style={{padding:"20px"}}>
-                    <h1>สรุปรายเดือน</h1>
+                    <h1>สรุปการใช้งาน</h1>
+                    <Graph/>
                 </div>
 
                 <div className='row border style={{padding:"20px"}}'>
@@ -56,7 +58,7 @@ function MainOwner(){
                 <div className='row border' style={{padding:"20px"}}>
                     <div className='col'>
                         <h1>Point</h1>
-                        <PointOwner/>
+                        <PointOther/>
                     </div>
                 </div>
 

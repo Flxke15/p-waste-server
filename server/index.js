@@ -244,6 +244,36 @@ app.get('/getAllUID',(req,res) =>{
     });
 });
 
+app.get('/getCountPoint1',(req,res) =>{
+    db.query("SELECT COUNT(Point) FROM history WHERE Point = 1", (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+})
+
+app.get('/getCountPoint2',(req,res) =>{
+    db.query("SELECT COUNT(Point) FROM history WHERE Point = 2", (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+})
+
+app.get('/getCountPoint3',(req,res) =>{
+    db.query("SELECT COUNT(Point) FROM history WHERE Point = 3", (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+})
+
 
 app.listen('3001',() =>{
     console.log('Server is running on port 3001')
