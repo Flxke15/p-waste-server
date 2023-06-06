@@ -44,21 +44,31 @@ function UserList(){
     }
     return(
         <div className='showUser'>
+            <table className='table'>
+                <thead>
+                <tr>
+                    <th scope='col'>Surname</th>
+                    <th scope='col'>Lastname</th>
+                    <th scope='col'>UID</th>
+                    <th scope='col'>Address</th>
+                    <th scope='col'>Delete</th>
+                </tr>
+                </thead>
             {showUsers()}
             {userList.map((val,key) =>{
                 return(
-                    <div className='employee card'>
-                        <div className='card-body text-left'>
-                            <p className='card-text'>Surname: {val.Surname}</p>
-                            <p className='card-text'>Lastname: {val.Lastname}</p>
-                            <p className='card-text'>UID: {val.UID}</p>
-                            <p className='card-text'>Address: {val.Address}</p>
-                            <p className='card-text'>Role: {val.Role}</p>
-                        </div>
-                        <button className='btn btn-danger' onClick={() => {deleteUser(val.ID)}} style={{marginBottom:2 +'em'}}>Delete</button>
-                    </div>
+                            <tbody>
+                            <tr>
+                                <th scope='row'>{val.Surname}</th>
+                                <td>{val.Lastname}</td>
+                                <td>{val.UID}</td>
+                                <td>{val.Address}</td>
+                                <td><button className='btn btn-danger' onClick={() => {deleteUser(val.ID)}} style={{marginBottom:2 +'em'}}>Delete</button></td>
+                            </tr>
+                            </tbody>
                 )
             })}
+            </table>
         </div>
 
     )

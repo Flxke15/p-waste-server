@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from "react";
 import Navbar from "../component/navbar";
 import Footer from "../component/footer";
-import axios from "axios";
+import axios, {get} from "axios";
 import Swal from "sweetalert2";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import {getValue} from "@testing-library/user-event/dist/utils";
@@ -17,6 +17,7 @@ function AddUser(){
     const [userlist,setUserlist] = useState([]);
 
     const [getuid,setGetUID] = useState([]);
+    const [getalluid,setGetAllUID] = useState([]);
     const [userList,setUserList] = useState([]);
 
 
@@ -48,30 +49,55 @@ function AddUser(){
     }
 
     // useEffect(()=>{
-    //     axios.get("http://localhost:3001/getUID").then((response) => {
-    //         setGetUID(response.data);
+    //     getuid.map((val,key)=>{
+    //         setUID(val.UID)
     //     })
     //
-    // },[])
+    // },[getuid])
 
     useEffect(()=>{
+            axios.get("http://localhost:3001/getAllUID").then((response) => {
+            setGetAllUID(response.data);
+        })
+        console.log(getalluid)
+    },[getalluid])
+
+    useEffect(()=>{
+            axios.get("http://localhost:3001/getUID").then((response) => {
+            setGetUID(response.data);
+        })
         getuid.map((val,key)=>{
             setUID(val.UID)
         })
-
+        console.log(uid)
     },[getuid])
 
     const getUID = async(event) => {
         event.preventDefault(false);
-
         await axios.get("http://localhost:3001/getUID").then((response) => {
             setGetUID(response.data);
         })
-        Swal.fire({
-            title : "Generate Success !",
-        })
+        for (let i = 0; i< getalluid.length-1;i++){
 
-        console.log(getuid)
+            console.log(Object.values(getalluid[i]).toString())
+            console.log(uid.toString())
+
+          if (Object.values(getalluid[i]).toString() === uid.toString()){
+              console.log("Error tag")
+              Swal.fire({
+                  title : "Error!",
+                  text : "This tag is already exists."
+              })
+              break
+          }else {
+              console.log("OK")
+              Swal.fire({
+                  title : "Generate Success !",
+              })
+          }
+
+        }
+
     }
 
 
@@ -105,7 +131,7 @@ function AddUser(){
                         />
                     </div>
                     <div className='mb-3'>
-                        <label htmlFor='uid' className='form-label'>UID :
+                        <label htmlFor='uid' className='form-label'><mark><u>Please Scan RFID before Press Scan UID button</u></mark>
                             <button className='btn btn-primary' style={{marginLeft : 1 + 'em'}} onClick={getUID}>Scan UID</button>
                         </label>
                         <div>

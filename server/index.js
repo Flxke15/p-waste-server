@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors(
     {
     origin:["http://localhost:3000"],
-    methods: ["GET","POST","DELETE"],
+    methods: ["GET","POST","DELETE","PUT"],
     credentials: true
     }
 ));
@@ -104,6 +104,49 @@ app.get('/showHistory',(req,res) =>{
     });
 });
 
+app.get('/getLastHistory',(req,res) =>{
+    db.query("SELECT UID,PointOwner FROM history ORDER BY No DESC LIMIT 1", (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+});
+
+app.get('/checkRole/:uid',(req,res) =>{
+    const uid = req.params.uid;
+    db.query("SELECT Role FROM users WHERE UID=?",uid, (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+});
+
+app.put('/updateStatusU/:point',(req,res) => {
+    const point = req.params.point;
+    db.query("UPDATE scanpoint SET Status = ? WHERE PointOwner = ?",["รอการดำเนินการ",point] , (err,result) => {
+        if (err) {
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    })
+})
+
+app.put('/updateStatusC/:point',(req,res) => {
+    const point = req.params.point;
+    db.query("UPDATE scanpoint SET Status = ? WHERE PointOwner = ?",["ดำเนินการเสร็จเรียบร้อยแล้ว",point] , (err,result) => {
+        if (err) {
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    })
+})
+
 app.post('/adduser', (req,res) => {
     const surname = req.body.surname;
     const lastname = req.body.lastname;
@@ -111,7 +154,7 @@ app.post('/adduser', (req,res) => {
     const address = req.body.address;
 
     db.query("INSERT INTO users (Surname,Lastname,UID,Address,Role) VALUES (?,?,?,?,?)",
-        [surname,lastname,uid,address,"C"],
+        [surname,lastname,uid,address,"U"],
         (err,result) => {
             if (err) {
                 console.log(err)
@@ -125,11 +168,10 @@ app.post('/addPoint', (req,res) => {
     const point = req.body.point;
     const name = req.body.name;
     const address = req.body.address;
-    const photo = req.body.photo;
     const link = req.body.link;
 
-    db.query("INSERT INTO scanpoint (Point,Name,Address,Photo,Link) VALUES (?,?,?,?,?)",
-        [point,name,address,photo,link],
+    db.query("INSERT INTO scanpoint (PointOwner,Name,Address,Status,Link) VALUES (?,?,?,?,?)",
+        [point,name,address,"First Register This PointOwner.",link],
         (err,result) => {
             if (err) {
                 console.log(err)
@@ -162,7 +204,7 @@ app.delete('/deletePoint/:id', (req,res) => {
 })
 
 app.get('/getUID',(req,res) =>{
-    db.query("SELECT UID FROM register ORDER BY ID DESC LIMIT 1", (err,result) => {
+    db.query("SELECT UID FROM UID ORDER BY ID DESC LIMIT 1", (err,result) => {
         if(err){
             console.log(err);
         }else {
@@ -170,6 +212,17 @@ app.get('/getUID',(req,res) =>{
         }
     });
 });
+
+app.get('/getAllUID',(req,res) =>{
+    db.query("SELECT UID FROM UID", (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+});
+
 
 app.listen('3001',() =>{
     console.log('Server is running on port 3001')

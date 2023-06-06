@@ -5,6 +5,10 @@ import Swal from "sweetalert2";
 function History(){
     const [historylist,setHistoryList] = useState([]);
 
+    const [lastHistory,setLastHistory] = useState([]);
+    const [roleUID,setRoleUID] = useState([]);
+    const [status,setStatus] = useState([]);
+
     const [currentPage,setCurrentPage] = useState(1)
     const recordsPerPage = 5;
     const lastIndex = currentPage * recordsPerPage;
@@ -12,6 +16,8 @@ function History(){
     const records = historylist.slice(firstIndex,lastIndex);
     const npage = Math.ceil(historylist.length/recordsPerPage)
     const numbers = [...Array(npage+1).keys()].slice(1)
+
+
 
     const showHistory = () =>{
         axios.get("http://localhost:3001/showHistory").then((response) =>{
@@ -24,11 +30,9 @@ function History(){
             setCurrentPage(currentPage - 1)
         }
     }
-
     function changeCPage(id){
         setCurrentPage(id)
     }
-
     function nextPage(){
         if(currentPage !== npage){
             setCurrentPage(currentPage + 1)
