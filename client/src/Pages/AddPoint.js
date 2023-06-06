@@ -52,7 +52,7 @@ function AddUser(){
                 <div className='adduser' style={{marginTop:"10px"}}>
                     <form action='' >
                         <div className='mb-3'>
-                            <label htmlFor='point' className='form-label'>PointOwner :</label>
+                            <label htmlFor='point' className='form-label'>Point :</label>
                             <input
                                 type='text'
                                 className='form-control'
