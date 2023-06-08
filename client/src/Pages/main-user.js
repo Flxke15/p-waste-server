@@ -1,48 +1,64 @@
-import React, {useState} from "react";
-import axios from "axios";
+import React, {useEffect, useState} from "react";
 import Navbar from "../component/navbar";
 import Footer from "../component/footer";
+import Cookies from 'universal-cookie';
 import {Routes, Route, useNavigate} from 'react-router-dom';
-import Information from "../component/Information";
-import PointUser from "../component/user/Point-User";
+import UserList from "../component/admin/UserList";
 import History from "../component/History";
+import Information from "../component/Information";
+import PointOther from "../component/PointOther";
+import Graph from "../component/owner/graph";
 
-
-
-function MainUser() {
+function MainUser(){
+    const cookies = new Cookies();
     const navigate = useNavigate();
-    const gotologin = () => {
-        navigate('/Login')
+    const [name,setName] = useState({});
+
+    const login = () =>{
+        cookies.remove('Guest',{path:'/'})
+        navigate('/login');
     }
 
+    useEffect(()=>{
+        const login = async () =>{
+            if (cookies.get('Guest') == undefined){
+                navigate('/login');
+            }else {
+                await setName(cookies.get('Guest'));
+                //window.location.reload(true);
+            }
+            console.log(cookies.get('User'));
+        }
+        login();
+
+    },[])
+
     return(
-        <div className='container'>
+        <div>
             <Navbar/>
-            <div style={{justifyContent:"flex-end",display:"flex"}}>
-                    <button className='btn btn-primary' onClick={gotologin} style={{marginBottom:"10px"}}>Go to Login</button>
+            <div className='App container' style={{marginBottom:'20px'}}>
+                <div style={{justifyContent:"flex-end",display:"flex",marginTop:'10px',marginBottom:'10px'}}>
+                    <button className='btn btn-secondary' onClick={login} style={{width:'100px'}}>Login</button>
+                </div>
+
+
+                <div className='row border' style={{padding:"20px"}}>
+                    <h1>Point</h1>
+                    <PointOther/>
+                </div>
+
+                <div className='row border style={{padding:"20px"}}'>
+                    <div className='col border' style={{padding:"20px"}}>
+                        <h1>History</h1>
+                        <History/>
+                    </div>
+                    <div className='col border' style={{padding:"20px"}}>
+                        <h1>เวลาการทำงาน</h1>
+                        <Information/>
+                    </div>
+                </div>
+
             </div>
-
-            <div className='row border'>
-                <div className='row' style={{padding:"20px"}}>
-                        <h1>จุดให้บริการ</h1>
-                </div>
-
-                <div className='row'>
-                    <PointUser/>
-                </div>
-            </div>
-
-            <div className='row'>
-                <div className='col border' >
-                    <h1>History</h1>
-                    <History/>
-                </div>
-                <div className='col border'>
-                    <h1>Information</h1>
-                    <Information/>
-                </div>
-            </div>
-
             <Footer/>
         </div>
     )

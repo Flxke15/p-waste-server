@@ -12,6 +12,7 @@ const Cookies = require("universal-cookie");
 const cookies = new Cookies();
 
 //app.options('*',cors())
+
 app.use(express.json());
 app.use(cors(
     {
@@ -32,6 +33,7 @@ app.use(session({
     cookie: {
         expries: 60*60*24,
     },
+
 }))
 
 const db = mysql.createConnection({
@@ -44,6 +46,7 @@ const db = mysql.createConnection({
 
 
 app.get("/login", (req,res) => {
+
     if (req.session.user){
         res.send({loggedIn : true, user: req.session.user});
     }else {
@@ -85,6 +88,7 @@ app.get('/showUser',(req,res) =>{
 });
 
 app.get('/showPoint',(req,res) =>{
+
     db.query("SELECT * FROM scanpoint", (err,result) => {
         if(err){
             console.log(err);
@@ -95,7 +99,9 @@ app.get('/showPoint',(req,res) =>{
 });
 
 app.get('/showHistory',(req,res) =>{
+
     db.query("SELECT * FROM history ORDER BY No DESC", (err,result) => {
+        //res.set('Access-Control-Allow-Origin', '*');
         if(err){
             console.log(err);
         }else {
@@ -105,7 +111,8 @@ app.get('/showHistory',(req,res) =>{
 });
 
 app.get('/getLastHistory',(req,res) =>{
-    db.query("SELECT UID,PointOwner FROM history ORDER BY No DESC LIMIT 1", (err,result) => {
+
+    db.query("SELECT * FROM history ORDER BY No DESC LIMIT 1", (err,result) => {
         if(err){
             console.log(err);
         }else {
@@ -115,8 +122,9 @@ app.get('/getLastHistory',(req,res) =>{
 });
 
 app.get('/checkRole/:uid',(req,res) =>{
+
     const uid = req.params.uid;
-    db.query("SELECT Role FROM users WHERE UID=?",uid, (err,result) => {
+    db.query("SELECT * FROM uid WHERE UID=?",uid, (err,result) => {
         if(err){
             console.log(err);
         }else {
@@ -126,8 +134,9 @@ app.get('/checkRole/:uid',(req,res) =>{
 });
 
 app.put('/updateStatusU/:point',(req,res) => {
+
     const point = req.params.point;
-    db.query("UPDATE scanpoint SET Status = ? WHERE PointOwner = ?",["รอการดำเนินการ",point] , (err,result) => {
+    db.query("UPDATE scanpoint SET Status = ? WHERE Point = ?",["รอการดำเนินการ",point] , (err,result) => {
         if (err) {
             console.log(err);
         }else {
@@ -137,8 +146,9 @@ app.put('/updateStatusU/:point',(req,res) => {
 })
 
 app.put('/updateStatusC/:point',(req,res) => {
+
     const point = req.params.point;
-    db.query("UPDATE scanpoint SET Status = ? WHERE PointOwner = ?",["ดำเนินการเสร็จเรียบร้อยแล้ว",point] , (err,result) => {
+    db.query("UPDATE scanpoint SET Status = ? WHERE Point = ?",["ดำเนินการเสร็จเรียบร้อยแล้ว",point] , (err,result) => {
         if (err) {
             console.log(err);
         }else {
@@ -148,6 +158,7 @@ app.put('/updateStatusC/:point',(req,res) => {
 })
 
 app.post('/adduser', (req,res) => {
+
     const surname = req.body.surname;
     const lastname = req.body.lastname;
     const uid = req.body.uid;
@@ -165,6 +176,7 @@ app.post('/adduser', (req,res) => {
 })
 
 app.post('/addPoint', (req,res) => {
+
     const point = req.body.point;
     const name = req.body.name;
     const address = req.body.address;
@@ -182,6 +194,7 @@ app.post('/addPoint', (req,res) => {
 })
 
 app.delete('/deleteUser/:id', (req,res) => {
+
     const id = req.params.id;
     db.query("DELETE FROM users where ID = ?",id,(err,result) => {
         if (err){
@@ -193,6 +206,7 @@ app.delete('/deleteUser/:id', (req,res) => {
 })
 
 app.delete('/deletePoint/:id', (req,res) => {
+
     const id = req.params.id;
     db.query("DELETE FROM scanpoint where ID = ?",id,(err,result) => {
         if (err){
@@ -203,7 +217,31 @@ app.delete('/deletePoint/:id', (req,res) => {
     })
 })
 
+app.delete('/deleteUIDFromUser/:uid', (req,res) => {
+
+    const uid = req.params.uid;
+    db.query("DELETE FROM uid where UID = ?",uid,(err,result) => {
+        if (err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    })
+})
+
+app.delete('/deleteUID', (req,res) => {
+
+    db.query("DELETE FROM uid ORDER BY ID DESC LIMIT 1",(err,result) => {
+        if (err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    })
+})
+
 app.get('/getUID',(req,res) =>{
+
     db.query("SELECT UID FROM UID ORDER BY ID DESC LIMIT 1", (err,result) => {
         if(err){
             console.log(err);
@@ -214,6 +252,7 @@ app.get('/getUID',(req,res) =>{
 });
 
 app.get('/getAllUID',(req,res) =>{
+
     db.query("SELECT UID FROM UID", (err,result) => {
         if(err){
             console.log(err);
@@ -222,6 +261,39 @@ app.get('/getAllUID',(req,res) =>{
         }
     });
 });
+
+app.get('/getCountPoint1',(req,res) =>{
+
+    db.query("SELECT COUNT(Point) FROM history WHERE Point = 1", (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+})
+
+app.get('/getCountPoint2',(req,res) =>{
+
+    db.query("SELECT COUNT(Point) FROM history WHERE Point = 2", (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+})
+
+app.get('/getCountPoint3',(req,res) =>{
+
+    db.query("SELECT COUNT(Point) FROM history WHERE Point = 3", (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+})
 
 
 app.listen('3001',() =>{

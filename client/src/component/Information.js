@@ -5,7 +5,7 @@ import p3 from "../images/3.png"
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import "./styles.css";
+import "./component.css";
 import { Navigation } from "swiper";
 function Information(){
 

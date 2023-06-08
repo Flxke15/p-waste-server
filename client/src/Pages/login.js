@@ -50,40 +50,47 @@ function Login() {
         })
     },[])
 
-    return (
-        <div className="App container">
-            <Navbar/>
-            <div className='information' style={{marginTop:"20vh"}}>
-                <form action=''>
-                    <div className='mb-3'>
-                        <label htmlFor='name' className='form-label'>User :</label>
-                        <input
-                            type={'text'}
-                            className={'form-control'}
-                            placeholder={'Enter User'}
-                            onChange={(event) => {
-                                setUsername(event.target.value)
-                            }}
-                        />
-                    </div>
-                    <div className='mb-3'>
-                        <label htmlFor='age' className='form-label'>Password :</label>
-                        <input
-                            type={'password'}
-                            className={'form-control'}
-                            placeholder={'Enter Password'}
-                            onChange={(event) => {
-                                setPassword(event.target.value)
-                            }}
-                        />
-                    </div>
-                    <div className='login-btn' style={{display:"flex",justifyContent:"flex-end"}}>
-                        <a className='btn btn-secondary' href='/mainUser' role='button' style={{marginRight: 2 + 'em'}}>Login with Guest</a>
-                        <a className='btn btn-success' role='button' onClick={login}>Login</a>
-                        <h1>{loginStatus}</h1>
-                    </div>
+    function GuestCookie(){
+        cookies.set('Guest',"Guest",{path:'/'});
+        navigate('/mainUser')
+    }
 
-                </form>
+    return (
+        <div>
+            <Navbar/>
+            <div className="App container">
+                <div className='information' style={{marginTop:"20vh"}}>
+                    <form action=''>
+                        <div className='mb-3'>
+                            <label htmlFor='name' className='form-label'>User :</label>
+                            <input
+                                type={'text'}
+                                className={'form-control'}
+                                placeholder={'Enter User'}
+                                onChange={(event) => {
+                                    setUsername(event.target.value)
+                                }}
+                            />
+                        </div>
+                        <div className='mb-3'>
+                            <label htmlFor='age' className='form-label'>Password :</label>
+                            <input
+                                type={'password'}
+                                className={'form-control'}
+                                placeholder={'Enter Password'}
+                                onChange={(event) => {
+                                    setPassword(event.target.value)
+                                }}
+                            />
+                        </div>
+                        <div className='login-btn' style={{display:"flex",justifyContent:"flex-end"}}>
+                            <a className='btn btn-secondary' role='button' style={{marginRight: 2 + 'em'}} onClick={GuestCookie}>Login with Guest</a>
+                            <a className='btn btn-success' role='button' onClick={login}>Login</a>
+                            <h1>{loginStatus}</h1>
+                        </div>
+
+                    </form>
+                </div>
             </div>
         </div>
     );
