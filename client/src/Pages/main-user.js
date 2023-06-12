@@ -8,6 +8,7 @@ import History from "../component/History";
 import Information from "../component/Information";
 import PointOther from "../component/PointOther";
 import Graph from "../component/owner/graph";
+import HistoryGuest from "../component/Guest/History-Guest";
 
 function MainUser(){
     const cookies = new Cookies();
@@ -50,7 +51,7 @@ function MainUser(){
                 <div className='row border style={{padding:"20px"}}'>
                     <div className='col border' style={{padding:"20px"}}>
                         <h1>History</h1>
-                        <History/>
+                        <HistoryGuest/>
                     </div>
                     <div className='col border' style={{padding:"20px"}}>
                         <h1>เวลาการทำงาน</h1>
