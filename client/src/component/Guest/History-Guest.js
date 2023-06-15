@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Pagination} from "@mui/material";
 import './History-Guest.css'
+import dateFormat from "dateformat";
 
 function HistoryGuest(){
     const [historylist,setHistoryList] = useState([]);
@@ -62,7 +63,7 @@ function HistoryGuest(){
                             <th scope='row'>{val.No}</th>
                             {/*<td>{val.UID}</td>*/}
                             <td>{val.Point}</td>
-                            <td>{val.Datetime}</td>
+                            <td>{dateFormat(val.Datetime,"yyyy-mm-dd hh:mm:ss tt")}</td>
                         </tr>
                         </tbody>
                     )
@@ -84,7 +85,6 @@ function HistoryGuest(){
                         <a className='page-link' onClick={nextPage}>Next</a>
                     </li>
                 </ul>
-
             </nav>
         </div>
     )

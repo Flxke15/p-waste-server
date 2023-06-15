@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import dateFormat from "dateformat";
 
 function History(){
     const [historylist,setHistoryList] = useState([]);
@@ -61,7 +62,7 @@ function History(){
                             <th scope='row'>{val.No}</th>
                             <td>{val.UID}</td>
                             <td>{val.Point}</td>
-                            <td>{val.Datetime}</td>
+                            <td>{dateFormat(val.Datetime,"yyyy-mm-dd hh:mm:ss tt")}</td>
                         </tr>
                         </tbody>
                     )
