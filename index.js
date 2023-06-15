@@ -17,7 +17,7 @@ const cookies = new Cookies();
 app.use(express.json());
 app.use(cors(
     {
-    origin:["https://eager-bass-ring.cyclic.app"],
+    origin:["https://p-waste-client.vercel.app"],
     methods: ["GET","POST","DELETE","PUT"],
     credentials: true
     }
