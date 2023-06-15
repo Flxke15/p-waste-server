@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
+import {Pagination} from "@mui/material";
+import './History-Guest.css'
 
 function HistoryGuest(){
     const [historylist,setHistoryList] = useState([]);
@@ -43,7 +44,7 @@ function HistoryGuest(){
     }
 
     return(
-        <div>
+        <div className='App container'>
             <table className='table'>
                 <thead>
                 <tr>
@@ -70,19 +71,20 @@ function HistoryGuest(){
             <nav>
                 <ul className='pagination'>
                     <li className='page-item'>
-                        <a href='#' className='page-link' onClick={prePage}>Prev</a>
+                        <a className='page-link' onClick={prePage}>Prev</a>
                     </li>
                     {
                         numbers.map((n,i)=>(
                             <li className={`page-item ${currentPage === n ? `active` : ``}`} key={i}>
-                                <a href='#' className='page-link' onClick={()=>changeCPage(n)} >{n}</a>
+                                <a className='page-link num' onClick={()=>changeCPage(n)} >{n}</a>
                             </li>
                         ))
                     }
                     <li className='page-item'>
-                        <a href='#' className='page-link' onClick={nextPage}>Next</a>
+                        <a className='page-link' onClick={nextPage}>Next</a>
                     </li>
                 </ul>
+
             </nav>
         </div>
     )

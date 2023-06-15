@@ -24,22 +24,21 @@ body{
     padding: 20px;
 }
 
-/*a{*/
-/*    font-family: 'Inconsolata', monospace;*/
-/*}*/
-
-/*label{*/
-/*    font-family: 'Inconsolata', monospace;*/
-/*    font-size: 25px;*/
-/*}*/
-
-/*input{*/
-/*    font-family: 'Inconsolata', monospace;*/
-/*    font-size: 20px;*/
-/*}*/
 
 /*adminCss*/
 .admin-point{
     /*font-family: 'Inconsolata', monospace;*/
     font-family: 'Kanit', sans-serif;
+}
+
+.mySwiper{
+    width: 600px;
+    height: 350px;
+}
+
+@media screen and (max-width: 767px){
+    .mySwiper{
+        width: 300px;
+        height: 150px;
+    }
 }

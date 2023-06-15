@@ -11,7 +11,7 @@ function Information(){
 
     return(
         <div>
-            <Swiper navigation={true} modules={[Navigation]} className="mySwiper" style={{width:"600px",height:"350px"}}>
+            <Swiper navigation={true} modules={[Navigation]} className="mySwiper" >
                 <SwiperSlide>><img src={p1}/></SwiperSlide>
                 <SwiperSlide><img src={p2}/></SwiperSlide>
                 <SwiperSlide><img src={p3}/></SwiperSlide>
