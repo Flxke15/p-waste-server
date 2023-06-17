@@ -186,7 +186,7 @@ app.post('/addPoint', (req,res) => {
     const address = req.body.address;
     const link = req.body.link;
 
-    db.query("INSERT INTO scanpoint (PointOwner,Name,Address,Status,Link) VALUES (?,?,?,?,?)",
+    db.query("INSERT INTO scanpoint (Point,Name,Address,Status,Link) VALUES (?,?,?,?,?)",
         [point,name,address,"First Register This PointOwner.",link],
         (err,result) => {
             if (err) {
