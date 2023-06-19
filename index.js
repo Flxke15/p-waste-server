@@ -37,14 +37,14 @@ app.use(session({
 
 }))
 
-// const db = mysql.createConnection({
-//     user: "root",
-//     host: "localhost",
-//     password: "",
-//     database: "waste_management"
-// })
+const db = mysql.createConnection({
+    user: "root",
+    host: "localhost",
+    password: "",
+    database: "waste_management"
+})
 
-const db = mysql.createConnection(process.env.DATABASE_URL)
+//const db = mysql.createConnection(process.env.DATABASE_URL)
 
 
 
