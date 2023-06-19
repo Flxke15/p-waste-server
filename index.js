@@ -3,7 +3,7 @@ const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
 const e = require("express");
-//require('dotenv').config()
+require('dotenv').config()
 
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -37,14 +37,14 @@ app.use(session({
 
 }))
 
-const db = mysql.createConnection({
-    user: "root",
-    host: "localhost",
-    password: "",
-    database: "waste_management"
-})
+// const db = mysql.createConnection({
+//     user: "root",
+//     host: "localhost",
+//     password: "",
+//     database: "waste_management"
+// })
 
-//const db = mysql.createConnection(process.env.DATABASE_URL)
+const db = mysql.createConnection(process.env.DATABASE_URL)
 
 
 
