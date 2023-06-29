@@ -3,7 +3,6 @@ const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
 const e = require("express");
-require('dotenv').config()
 
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -17,7 +16,7 @@ const cookies = new Cookies();
 app.use(express.json());
 app.use(cors(
     {
-    origin:["https://p-waste-client.vercel.app"],
+    origin:["http://localhost:3000"],
     methods: ["GET","POST","DELETE","PUT"],
     credentials: true
     }
@@ -37,14 +36,12 @@ app.use(session({
 
 }))
 
-// const db = mysql.createConnection({
-//     user: "root",
-//     host: "localhost",
-//     password: "",
-//     database: "waste_management"
-// })
-
-const db = mysql.createConnection(process.env.DATABASE_URL)
+const db = mysql.createConnection({
+    user: "root",
+    host: "localhost",
+    password: "",
+    database: "wastemag_ver2"
+})
 
 
 
@@ -96,7 +93,6 @@ app.get('/showPoint',(req,res) =>{
         if(err){
             console.log(err);
         }else {
-            //console.log(result)
             res.send(result);
         }
     });
@@ -114,6 +110,19 @@ app.get('/showHistory',(req,res) =>{
     });
 });
 
+app.get('/getLastTime/:point',(req,res) =>{
+
+    const point = req.params.point;
+    db.query("SELECT Datetime FROM history WHERE Point = ? ORDER BY No DESC LIMIT 1",[point], (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+
+});
+
 app.get('/getLastHistory',(req,res) =>{
 
     db.query("SELECT * FROM history ORDER BY No DESC LIMIT 1", (err,result) => {
@@ -123,6 +132,7 @@ app.get('/getLastHistory',(req,res) =>{
             res.send(result);
         }
     });
+
 });
 
 app.get('/checkRole/:uid',(req,res) =>{
@@ -174,9 +184,77 @@ app.post('/adduser', (req,res) => {
             if (err) {
                 console.log(err)
             }else {
-                res.send("Adduser success")
+                res.send(result)
+                // db.query("UPDATE uid SET Role = ? WHERE UID = ?",['U',uid], (err,result) => {
+                //     if (err){
+                //         console.log(err);
+                //     }else {
+                //         res.send(result);
+                //     }
+                // })
+            }
+        })
+})
+
+app.post('/addadmin', (req,res) => {
+
+    const surname = req.body.surname;
+    const lastname = req.body.lastname;
+    const address = req.body.address;
+    const username = req.body.username;
+    const password = req.body.password;
+
+    db.query("INSERT INTO users (Surname,Lastname,Address,Role,User,Password) VALUES (?,?,?,?,?,?)",
+        [surname,lastname,address,"A",username,password],
+        (err,result) => {
+            if (err) {
+                console.log(err)
+            }else {
+                res.send(result)
             }
         });
+})
+
+app.post('/addcollector', (req,res) => {
+
+    const surname = req.body.surname;
+    const lastname = req.body.lastname;
+    const uid = req.body.uid;
+    const address = req.body.address;
+
+    db.query("INSERT INTO users (Surname,Lastname,UID,Address,Role) VALUES (?,?,?,?,?)",
+        [surname,lastname,uid,address,"C"],
+        (err,result) => {
+            if (err) {
+                console.log(err)
+            }else {
+                res.send(result)
+            }
+        })
+})
+
+app.put('/updateRoleUIDC/:uid',(req,res) => {
+
+    const uid = req.params.uid;
+    db.query("UPDATE uid SET Role = ? WHERE UID = ?",["C",uid] , (err,result) => {
+        if (err) {
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    })
+})
+
+app.put('/updateRoleUIDU/:uid',(req,res) => {
+
+    const uid = req.params.uid;
+    db.query("UPDATE uid SET Role = ? WHERE UID = ?",["U",uid] , (err,result) => {
+        if (err) {
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    })
 })
 
 app.post('/addPoint', (req,res) => {
@@ -187,7 +265,7 @@ app.post('/addPoint', (req,res) => {
     const link = req.body.link;
 
     db.query("INSERT INTO scanpoint (Point,Name,Address,Status,Link) VALUES (?,?,?,?,?)",
-        [point,name,address,"First Register This PointOwner.",link],
+        [point,name,address,"First Register This Point.",link],
         (err,result) => {
             if (err) {
                 console.log(err)
@@ -212,7 +290,26 @@ app.delete('/deleteUser/:id', (req,res) => {
 app.delete('/deletePoint/:id', (req,res) => {
 
     const id = req.params.id;
-    db.query("DELETE FROM scanpoint where ID = ?",id,(err,result) => {
+    db.query("DELETE FROM scanpoint where Point = ?",id,(err,result) => {
+        if (err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    })
+        // db.query("DELETE FROM history where Point = ?",id,(err,result) => {
+        //     if (err){
+        //         console.log(err);
+        //     }else {
+        //         res.send(result);
+        //     }
+        // })
+})
+
+app.delete('/deletePointHistory/:id', (req,res) => {
+
+    const id = req.params.id;
+    db.query("DELETE FROM history where Point = ?",id,(err,result) => {
         if (err){
             console.log(err);
         }else {
@@ -220,6 +317,8 @@ app.delete('/deletePoint/:id', (req,res) => {
         }
     })
 })
+
+
 
 app.delete('/deleteUIDFromUser/:uid', (req,res) => {
 
@@ -257,7 +356,7 @@ app.get('/getUID',(req,res) =>{
 
 app.get('/getAllUID',(req,res) =>{
 
-    db.query("SELECT UID FROM UID", (err,result) => {
+    db.query("SELECT UID FROM uid", (err,result) => {
         if(err){
             console.log(err);
         }else {
@@ -268,7 +367,7 @@ app.get('/getAllUID',(req,res) =>{
 
 app.get('/getCountPoint1',(req,res) =>{
 
-    db.query("SELECT COUNT(Point) FROM history WHERE Point = 1", (err,result) => {
+    db.query("SELECT COUNT(Point) FROM history WHERE Point = 1 and Role = 'U'", (err,result) => {
         if(err){
             console.log(err);
         }else {
@@ -279,7 +378,7 @@ app.get('/getCountPoint1',(req,res) =>{
 
 app.get('/getCountPoint2',(req,res) =>{
 
-    db.query("SELECT COUNT(Point) FROM history WHERE Point = 2", (err,result) => {
+    db.query("SELECT COUNT(Point) FROM history WHERE Point = 2 and Role = 'U'", (err,result) => {
         if(err){
             console.log(err);
         }else {
@@ -290,7 +389,30 @@ app.get('/getCountPoint2',(req,res) =>{
 
 app.get('/getCountPoint3',(req,res) =>{
 
-    db.query("SELECT COUNT(Point) FROM history WHERE Point = 3", (err,result) => {
+    db.query("SELECT COUNT(Point) FROM history WHERE Point = 3 and Role = 'U'", (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+})
+
+app.get('/getCountPoint/:point',(req,res) =>{
+
+    const point = req.params.point;
+    db.query("SELECT COUNT(Point) FROM history WHERE Point = ? and Role = ?",[point,'U'], (err,result) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
+})
+
+app.get('/selectPoints',(req,res) =>{
+
+    db.query("SELECT Point FROM scanpoint", (err,result) => {
         if(err){
             console.log(err);
         }else {
@@ -303,7 +425,5 @@ app.get('/getCountPoint3',(req,res) =>{
 app.listen('3001',() =>{
     console.log('Server is running on port 3001')
 });
-
-// db.end()
 
 
